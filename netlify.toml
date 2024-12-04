@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "public" # Adjust to your static assets folder
+  functions = "functions" # Directory for serverless functions
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
