@@ -1,0 +1,12 @@
+#toggleOldPassword {
+  position: absolute;
+  right: 10px;
+  top: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #6a0dad;
+}
+
+#toggleOldPassword:hover {
+  color: #5b0c97; /* Darker purple */
+}

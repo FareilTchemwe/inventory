@@ -1,0 +1,116 @@
+/* Basic Styles for Alert */
+.alert {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 30px;
+  border-radius: 10px;
+  color: white;
+  font-size: 18px;
+  font-family: "Arial", sans-serif;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0s 0.5s, transform 0.5s ease;
+  transform: translateX(-50%) translateY(-20px);
+}
+
+.alert.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  transition: opacity 0.5s ease, visibility 0s, transform 0.5s ease;
+}
+
+/* Success Alert */
+.alert-success {
+  background-color: #4caf50; /* Green */
+  border-left: 5px solid #2e7d32;
+}
+
+/* Error Alert */
+.alert-error {
+  background-color: #f44336; /* Red */
+  border-left: 5px solid #d32f2f;
+}
+
+.close-alert {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 10px;
+  transition: transform 0.3s ease;
+}
+
+.close-alert:hover {
+  opacity: 0.7;
+  transform: rotate(45deg); /* Add some rotation for fun */
+}
+
+.close-alert:focus {
+  outline: none;
+}
+
+/* Additional Visual Enhancements */
+.alert p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.alert-success {
+  animation: slideInSuccess 0.5s ease-in-out forwards;
+}
+
+.alert-error {
+  animation: slideInError 0.5s ease-in-out forwards;
+}
+
+@keyframes slideInSuccess {
+  0% {
+    transform: translateX(-50%) translateY(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInError {
+  0% {
+    transform: translateX(-50%) translateY(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+.alert-hidden {
+  display: none;
+}
+
+/* Close alert with animation */
+.alert-hidden .alert {
+  animation: slideOut 0.5s ease-in-out forwards;
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-30px);
+    opacity: 0;
+  }
+}
