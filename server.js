@@ -53,7 +53,6 @@ app.use(
 
 // Routes
 
-// Updated registration route to include first name, last name, username, and password
 app.post("/register", async (req, res) => {
   const { firstName, lastName, username, password } = req.body;
 
@@ -63,25 +62,43 @@ app.post("/register", async (req, res) => {
   }
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10); // Salt rounds = 10
-
-    // Insert user data into the database
-    const query =
-      "INSERT INTO users (first_name, last_name, username, password) VALUES (?, ?, ?, ?)";
+    // Check if the username already exists
+    const checkUserQuery = "SELECT username FROM users WHERE username = ?";
     db.query(
-      query,
-      [firstName.trim(), lastName.trim(), username.trim(), hashedPassword],
-      (err, results) => {
-        if (err) {
-          console.error("Database error:", err);
+      checkUserQuery,
+      [username.trim()],
+      async (checkErr, checkResults) => {
+        if (checkErr) {
+          console.error("Database error during username check:", checkErr);
           return res.status(500).json({ error: "Internal Server Error" });
         }
 
-        return res.status(201).json({ success: 1 });
+        if (checkResults.length > 0) {
+          return res.status(409).json({ error: "Username already exists." });
+        }
+
+        // If username is not taken, hash the password and insert the new user
+        const hashedPassword = await bcrypt.hash(password, 10); // Salt rounds = 10
+        const insertUserQuery =
+          "INSERT INTO users (first_name, last_name, username, password) VALUES (?, ?, ?, ?)";
+        db.query(
+          insertUserQuery,
+          [firstName.trim(), lastName.trim(), username.trim(), hashedPassword],
+          (insertErr, insertResults) => {
+            if (insertErr) {
+              console.error("Database error during user insertion:", insertErr);
+              return res.status(500).json({ error: "Internal Server Error" });
+            }
+
+            return res
+              .status(201)
+              .json({ success: 1, message: "User registered successfully." });
+          }
+        );
       }
     );
   } catch (error) {
-    console.error("Error hashing password:", error);
+    console.error("Error during registration:", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -257,24 +274,30 @@ app.post("/logout", (req, res) => {
   if (userId == null) {
     return res.status(401).json({ error: "Unauthorized. Please log in." });
   }
-  // Destroy the session
-  req.session.destroy((err) => {
-    if (err) {
-      return res
-        .status(500)
-        .json({ error: "An error occurred during logout." });
-    }
-    res.json({ success: "Logged out successfully." });
-  });
+  userId = null;
+
+  res.json({ success: "Logged out successfully." });
 });
 
 app.get("/get-products", (req, res) => {
   if (userId == null) {
     return res.status(401).json({ error: "Unauthorized. Please log in." });
   }
-  db.query("SELECT * FROM products", (err, results) => {
-    if (err) return res.status(500).json({ error: "Internal Server Error" });
-    res.status(200).json({ products: results });
+  const userQuery = "SELECT first_name, last_name FROM users WHERE id = ?";
+  const productQuery = "SELECT * FROM products";
+
+  db.query(userQuery, [userId], (userErr, userResults) => {
+    if (userErr || userResults.length === 0) {
+      return res
+        .status(500)
+        .json({ error: "User not found or internal error." });
+    }
+    const user = userResults[0];
+    db.query(productQuery, (prodErr, productResults) => {
+      if (prodErr)
+        return res.status(500).json({ error: "Internal Server Error" });
+      res.status(200).json({ products: productResults, user });
+    });
   });
 });
 

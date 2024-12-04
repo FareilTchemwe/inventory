@@ -13,10 +13,14 @@ function showAlert(type, message) {
   }, 3000);
 }
 
-document.getElementById("closeAlert").addEventListener("click", () => {
+function closeAlert() {
   const alertBox = document.getElementById("alert");
   alertBox.classList.remove("show");
   setTimeout(() => {
     alertBox.classList.add("alert-hidden");
   }, 500); // Wait for the slide-out animation to complete before hiding
-});
+}
+
+// Expose it globally
+window.showAlert = showAlert;
+window.closeAlert = closeAlert;

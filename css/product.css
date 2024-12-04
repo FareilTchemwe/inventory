@@ -1,3 +1,38 @@
+/* General fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header slide-in animation */
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Smooth button hover animation */
+@keyframes buttonPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
@@ -6,14 +41,17 @@ body {
   padding: 0;
 }
 
+/* Header Styles with Animation */
 header {
   background-color: #6a0dad;
   color: white;
   padding: 20px;
   text-align: center;
   position: relative;
+  animation: slideIn 1s ease-out;
 }
 
+/* Logout Button Hover Effect */
 .logout-button {
   position: absolute;
   top: 20px;
@@ -24,19 +62,21 @@ header {
   border-radius: 5px;
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .logout-button:hover {
   background-color: #1b647a;
 }
 
+/* Main Container Animation */
 main {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding: 20px;
+  animation: fadeIn 1s ease-in-out;
 }
 
 h1 {
@@ -45,7 +85,7 @@ h1 {
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 1500px;
   width: 100%;
   padding: 20px;
   border: 1px solid #ccc;
@@ -55,9 +95,64 @@ h1 {
   text-align: center;
 }
 
+/* Center the search container */
+.search-container {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* Search Bar Animation */
+.search-bar {
+  position: relative;
+  width: 80%;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  background: #f9f9f9;
+  border: 2px solid #ddd;
+  border-radius: 50px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, transform 0.3s;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Add hover/focus effect */
+.search-bar:hover,
+.search-bar:focus-within {
+  border-color: #6a0dad;
+}
+
+/* Style the search icon */
+.search-icon {
+  position: absolute;
+  left: 15px;
+  font-size: 1.2rem;
+  color: #aaa;
+  pointer-events: none;
+}
+
+/* Style the search input */
+#searchInput {
+  width: 100%;
+  padding: 10px 15px 10px 45px; /* Adjust padding to avoid overlapping the icon */
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  background: transparent;
+  border-radius: 50px;
+}
+
+/* Add focus styles */
+#searchInput:focus {
+  box-shadow: none;
+}
+
+/* Table Container Animation */
 .table-container {
-  overflow-x: auto; /* Add horizontal scroll for small screens */
+  overflow-x: auto;
   margin-top: 20px;
+  animation: fadeIn 0.8s ease-in-out;
 }
 
 table {
@@ -79,6 +174,7 @@ th {
   color: white;
 }
 
+/* Buttons with Animation */
 .button {
   background-color: #6a0dad;
   color: white;
@@ -86,8 +182,7 @@ th {
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.2s;
 }
 
 .button:hover {
@@ -245,6 +340,15 @@ footer {
   background: #5b0c97;
 }
 
+/* Modal Fade-in Animation */
+.modal.active .modal-content {
+  animation: fadeIn 0.5s ease-in-out;
+}
+/* Table Row Hover Animation */
+table tr:hover {
+  background-color: #f5f5f5;
+  transition: background-color 0.3s ease;
+}
 @keyframes fadeIn {
   from {
     opacity: 0;

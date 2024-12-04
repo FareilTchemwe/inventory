@@ -1,23 +1,47 @@
 /* General styles */
 body {
   font-family: "Arial", sans-serif;
-  background: linear-gradient(135deg, #ece9e6, #ffffff); /* Subtle gradient */
+  background: linear-gradient(135deg, #ece9e6, #ffffff);
   color: #333;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Full height of the viewport */
+  height: 100vh;
+  animation: fadeIn 1.5s ease-in-out; /* Page fade-in */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Header */
 header {
-  background-color: #6a0dad; /* Purple */
+  background-color: #6a0dad;
   color: white;
   padding: 20px;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  animation: slideDown 1.5s ease-out; /* Slide down on load */
 }
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .back-icon {
   font-size: 20px;
   color: #6a0dad;
@@ -39,16 +63,27 @@ main {
   padding: 20px;
 }
 
-/* Login container */
+/* Login container with slide-in animation */
 .login-container {
   max-width: 360px;
   width: 100%;
   padding: 25px;
-  border: none;
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   background-color: #ffffff;
   text-align: center;
+  animation: slideUp 1.2s ease-in-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .login-container h2 {

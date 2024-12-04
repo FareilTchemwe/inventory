@@ -3,16 +3,54 @@ body {
   background-color: #d9bcee;
   margin: 0;
   padding: 0;
+  animation: fadeInBackground 2s ease-in-out;
+}
+
+@keyframes fadeInBackground {
+  from {
+    background-color: #f2f2f2;
+  }
+  to {
+    background-color: #d9bcee;
+  }
 }
 
 .container {
   max-width: 1200px;
   margin: 50px auto;
+  animation: slideInContainer 1.5s ease-out;
+}
+
+@keyframes slideInContainer {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .account-header {
   text-align: center;
   margin-bottom: 30px;
+  animation: bounceInHeader 1s ease;
+}
+
+@keyframes bounceInHeader {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .account-card {
@@ -21,6 +59,18 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 30px;
   margin-bottom: 20px;
+  animation: fadeInCard 1s ease-in-out;
+}
+
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .back-icon {
@@ -28,6 +78,12 @@ body {
   color: #6a0dad;
   cursor: pointer;
   text-decoration: none;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.back-icon:hover {
+  color: #4caf50;
+  transform: scale(1.2);
 }
 
 .account-card h3 {
@@ -43,6 +99,28 @@ h3 {
   padding: 10px 20px;
   font-size: 16px;
   margin: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.btn-custom:hover {
+  transform: translateY(-2px);
+}
+
+.btn-custom:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  transition: height 0.3s;
+}
+
+.btn-custom:hover:after {
+  height: 100%;
 }
 
 .btn-edit {
@@ -60,17 +138,36 @@ h3 {
   color: white;
 }
 
-.btn-custom:hover {
-  opacity: 0.9;
-}
-
 .account-card i {
   font-size: 20px;
   margin-right: 10px;
+  animation: iconPop 1s ease infinite;
+}
+
+@keyframes iconPop {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
 }
 
 .account-card .options {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  animation: fadeInOptions 1.5s ease;
+}
+
+@keyframes fadeInOptions {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

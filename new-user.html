@@ -13,6 +13,7 @@
       rel="stylesheet"
     />
     <link href="css/login.css" rel="stylesheet" />
+    <link href="css/alert.css" rel="stylesheet" />
     <title>New user</title>
   </head>
 
@@ -25,6 +26,13 @@
       <i class="fas fa-arrow-left"></i> Back
     </a>
     <main>
+      <!-- Alert Section (Hidden by default) -->
+      <div id="alert" class="alert alert-hidden">
+        <p id="alertMessage"></p>
+        <button id="closeAlert" class="close-alert" onclick="closeAlert()">
+          x
+        </button>
+      </div>
       <div class="login-container">
         <h2>New User</h2>
         <form id="registerForm">
@@ -54,64 +62,7 @@
       <p>&copy; 2024 Dress Store. All rights reserved.</p>
     </footer>
 
-    <script>
-      // Function to toggle password visibility
-      function togglePasswordVisibility() {
-        const passwordField = document.getElementById("password");
-        const toggleIcon = document.getElementById("togglePassword");
-
-        if (passwordField.type === "password") {
-          passwordField.type = "text"; // Show password
-          toggleIcon.classList.remove("fa-eye"); // Remove eye icon
-          toggleIcon.classList.add("fa-eye-slash"); // Add eye-slash icon
-        } else {
-          passwordField.type = "password"; // Hide password
-          toggleIcon.classList.remove("fa-eye-slash"); // Remove eye-slash icon
-          toggleIcon.classList.add("fa-eye"); // Add eye icon
-        }
-      }
-
-      // Handle form submission with AJAX (JavaScript)
-      document
-        .getElementById("registerForm")
-        .addEventListener("submit", async function (event) {
-          event.preventDefault();
-
-          // Gather form data
-          const firstName = document.getElementById("firstname").value;
-          const lastName = document.getElementById("lastname").value;
-          const username = document.getElementById("username").value;
-          const password = document.getElementById("password").value;
-
-          // Validate form data
-          if (!firstName || !lastName || !username || !password) {
-            alert("All fields are required!");
-            return;
-          }
-
-          // Send a POST request using fetch to the /register route
-          try {
-            const response = await fetch("http://localhost:3000/register", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ firstName, lastName, username, password }),
-            });
-
-            response.json().then((resp) => {
-              if (resp && "success" in resp) {
-                alert("User registered successfully!");
-                window.location.href = "account.html";
-              } else {
-                alert(resp.error);
-              }
-            });
-          } catch (error) {
-            alert("An error occurred. Please try again.");
-            console.error(error);
-          }
-        });
-    </script>
+    <script src="js/alert.js"></script>
+    <script src="js/new-user.js"></script>
   </body>
 </html>

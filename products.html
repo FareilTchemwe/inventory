@@ -26,10 +26,24 @@
         >
         <h2>Inventory List</h2>
 
+        <!-- Search Bar -->
+        <div class="search-container">
+          <div class="search-bar">
+            <i class="fas fa-search search-icon"></i>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search by dress name..."
+            />
+          </div>
+        </div>
+
         <!-- Alert Section (Hidden by default) -->
         <div id="alert" class="alert alert-hidden">
           <p id="alertMessage"></p>
-          <button id="closeAlert" class="close-alert">x</button>
+          <button id="closeAlert" class="close-alert" onclick="closeAlert()">
+            x
+          </button>
         </div>
 
         <!-- Confirmation Modal -->
@@ -86,220 +100,16 @@
             type="number"
             name="quantity"
             placeholder="Enter quantity"
+            min="0"
             required
-            min="1"
+            id="qty"
           />
           <button type="submit" class="modal-submit">Submit</button>
         </form>
       </div>
     </div>
 
-    <script>
-      const productTableBody = document.getElementById("product-table-body");
-
-      // Fetch products and populate the table
-      async function loadProducts() {
-        try {
-          const response = await fetch("http://localhost:3000/get-products", {
-            method: "GET",
-          });
-
-          response.json().then((resp) => {
-            console.log(resp);
-            if (resp && "products" in resp) {
-              let products = resp.products;
-              productTableBody.innerHTML = products
-                .map((product) => createProductRow(product))
-                .join("");
-            } else {
-              alert(resp.error);
-            }
-          });
-        } catch (error) {
-          console.error("Error loading products:", error);
-        }
-      }
-
-      // Create a table row for a product
-      function createProductRow(product) {
-        const statusClass =
-          product.status === "available"
-            ? "badge-active"
-            : product.status === "finished"
-            ? "badge-out-of-stock"
-            : "badge-warning";
-
-        const statusText =
-          product.status === "available"
-            ? "Available"
-            : product.status === "finished"
-            ? "Finished"
-            : "Low";
-
-        return `
-        <tr>
-          <td>${product.id}</td>
-          <td>${product.name}</td>
-          <td>${product.size}</td>
-          <td>${product.color}</td>
-          <td style="text-align: center;">${parseFloat(product.price).toFixed(
-            2
-          )} FCFA</td>
-          <td style="text-align: right;">${product.qty}</td>
-          <td><span class="badge ${statusClass}">${statusText}</span></td>
-          <td>
-            <!-- Shop Modal -->
-            <button
-              class="action-button edit"
-              onclick="openModal(${product.id})"
-            >
-              <i class="fa fa-cart-plus"></i>
-            </button>
-
-            <!-- Edit Button -->
-            <button
-              class="action-button edit"
-              onclick="editProduct(${product.id})"
-            >
-              <i class="fas fa-edit"></i>
-            </button>
-
-            <!-- Delete Button -->
-            <button
-              class="action-button delete"
-              onclick="deleteProduct(${product.id})"
-            >
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </td>
-
-        </tr>
-      `;
-      }
-
-      // Function to handle editing a product
-      function editProduct(productId) {
-        // Redirect to the edit page with the product ID
-        window.location.href = `edit-product.html?id=${productId}`;
-      }
-
-      // Function to handle deleting a product
-
-      // Confirm the deletion action
-      async function confirmDelete() {
-        try {
-          const response = await fetch(
-            `http://localhost:3000/delete-product/${currentProductId}`,
-            {
-              method: "DELETE",
-            }
-          );
-
-          response.json().then((resp) => {
-            if (resp && "success" in resp) {
-              showAlert("success", "Product deleted successfully.");
-              loadProducts(); // Refresh the product list
-            } else {
-              showAlert("error", resp.error);
-            }
-            closeConfirmModal();
-          });
-        } catch (error) {
-          showAlert("error", "An error occurred while deleting the product.");
-          closeConfirmModal();
-        }
-      }
-
-      // Function to handle deleting a product (show custom confirmation modal)
-      function deleteProduct(productId) {
-        currentProductId = productId;
-        document.getElementById("confirmModal").classList.add("active");
-      }
-      // Close the confirmation modal
-      function closeConfirmModal() {
-        document.getElementById("confirmModal").classList.remove("active");
-      }
-
-      function showAlert(type, message) {
-        const alertBox = document.getElementById("alert");
-        const alertMessage = document.getElementById("alertMessage");
-
-        // Set the appropriate type class (success or error)
-        alertBox.className = `alert alert-${type}`;
-        alertMessage.textContent = message;
-
-        // Show the alert with animation
-        alertBox.classList.add("show");
-        setTimeout(() => {
-          alertBox.classList.add("alert-hidden");
-        }, 3000);
-      }
-
-      document.getElementById("closeAlert").addEventListener("click", () => {
-        const alertBox = document.getElementById("alert");
-        alertBox.classList.remove("show");
-        setTimeout(() => {
-          alertBox.classList.add("alert-hidden");
-        }, 500); // Wait for the slide-out animation to complete before hiding
-      });
-
-      // Modal control functions
-      const modal = document.getElementById("quantityModal");
-      const productIdInput = document.getElementById("product_id");
-
-      function openModal(productId) {
-        productIdInput.value = productId;
-        modal.classList.add("active");
-      }
-
-      function closeModal() {
-        modal.classList.remove("active");
-      }
-
-      window.addEventListener("click", function (event) {
-        if (event.target === modal) {
-          closeModal();
-        }
-      });
-
-      // Handle form submission using JavaScript to make a POST request to /shop
-      const shopForm = document.getElementById("shop-form");
-
-      shopForm.addEventListener("submit", async (event) => {
-        event.preventDefault(); // Prevent the default form submission
-
-        const productId = productIdInput.value;
-        const quantity = shopForm.querySelector('input[name="quantity"]').value;
-
-        try {
-          const response = await fetch("http://localhost:3000/shop", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              product_id: productId,
-              quantity: quantity,
-            }),
-          });
-
-          response.json().then((resp) => {
-            if (resp && "success" in resp) {
-              alert("Quantity updated successfully!");
-              closeModal(); // Close the modal after success
-              loadProducts();
-            } else {
-              alert(resp.error);
-            }
-          });
-        } catch (error) {
-          console.error("Error during the shop operation:", error);
-          alert("An error occurred. Please try again.");
-        }
-      });
-
-      // Load products on page load
-      loadProducts();
-    </script>
+    <script src="js/alert.js"></script>
+    <script src="js/product.js"></script>
   </body>
 </html>

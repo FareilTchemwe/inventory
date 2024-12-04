@@ -9,10 +9,13 @@
   background: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
+  opacity: 0; /* Initial state for fade-in */
+  animation: fadeIn 0.3s forwards; /* Fade-in animation */
 }
 
 .confirm-modal.active {
   display: flex;
+  animation: fadeIn 0.3s forwards; /* Reapply fade-in when active */
 }
 
 .confirm-modal-content {
@@ -22,6 +25,8 @@
   width: 300px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-50px); /* Start from above */
+  animation: slideDown 0.3s ease-out forwards; /* Slide-down animation */
 }
 
 .confirm-modal h3 {
@@ -42,7 +47,7 @@
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
 .confirm-modal button.confirm {
@@ -57,4 +62,24 @@
 
 .confirm-modal button:hover {
   opacity: 0.9;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Slide-down animation for modal content */
+@keyframes slideDown {
+  0% {
+    transform: translateY(-50px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
