@@ -24,6 +24,11 @@ function submitForm() {
     .then((resp) => {
       if (resp && resp.success) {
         showAlert("success", "Profile updated successfully!");
+      } else if (resp.status == 401) {
+        showAlert("error", resp.error);
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
       } else {
         showAlert("error", resp.error || "An error occurred.");
       }
@@ -42,6 +47,11 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("firstname").value = data.user.first_name;
         document.getElementById("lastname").value = data.user.last_name;
         document.getElementById("username").value = data.user.username;
+      } else if (resp.status == 401) {
+        showAlert("error", resp.error);
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
       } else {
         showAlert("error", "Failed to fetch user data.");
       }

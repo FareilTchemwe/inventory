@@ -36,6 +36,11 @@ function submitForm() {
     .then((resp) => {
       if (resp && resp.success) {
         showAlert("success", "Password updated successfully!");
+      } else if (resp.status == 401) {
+        showAlert("error", resp.error);
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
       } else {
         showAlert("error", resp.error || "An error occurred.");
       }

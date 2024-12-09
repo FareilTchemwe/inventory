@@ -22,6 +22,11 @@ async function loadProducts() {
         productTableBody.innerHTML = products
           .map((product) => createProductRow(product))
           .join("");
+      } else if (resp.status == 401) {
+        showAlert("error", resp.error);
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
       } else {
         showAlert("error", resp.error);
       }
@@ -113,6 +118,11 @@ async function confirmDelete() {
       if (resp && "success" in resp) {
         showAlert("success", "Product deleted successfully.");
         loadProducts(); // Refresh the product list
+      } else if (resp.status == 401) {
+        showAlert("error", resp.error);
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
       } else {
         showAlert("error", resp.error);
       }
@@ -191,6 +201,11 @@ shopForm.addEventListener("submit", async (event) => {
         showAlert("success", "Quantity updated successfully!");
         closeModal(); // Close the modal after success
         loadProducts();
+      } else if (resp.status == 401) {
+        showAlert("error", resp.error);
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
       } else {
         showAlert("error", resp.error);
       }

@@ -39,6 +39,11 @@ form.addEventListener("submit", async (event) => {
         setTimeout(() => {
           window.location.href = "products.html";
         }, 1500);
+      } else if (resp.status == 401) {
+        showAlert("error", resp.error);
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
       } else {
         showAlert("error", resp.error);
       }

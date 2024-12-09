@@ -23,6 +23,11 @@ async function loadProductDetails() {
         document.getElementById("quantity").value = product.qty;
         document.getElementById("threshold").value = product.threshold;
         document.getElementById("status").value = product.status;
+      } else if (resp.status == 401) {
+        showAlert("error", resp.error);
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
       } else {
         showAlert("error", resp.error);
       }
@@ -62,6 +67,11 @@ async function updateProduct() {
         showAlert("success", "Product updated successfully!");
         setTimeout(() => {
           window.location.href = "products.html";
+        }, 1500);
+      } else if (resp.status == 401) {
+        showAlert("error", resp.error);
+        setTimeout(() => {
+          window.location.href = "index.html";
         }, 1500);
       } else {
         showAlert("error", resp.error);

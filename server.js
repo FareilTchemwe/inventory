@@ -128,7 +128,9 @@ app.post("/login", (req, res) => {
 
 app.put("/reset-pass", async (req, res) => {
   if (userId == null) {
-    return res.status(401).json({ error: "Unauthorized. Please log in." });
+    return res
+      .status(401)
+      .json({ error: "Unauthorized. Please log in.", status: 401 });
   }
   const { oldPassword, newPassword } = req.body;
   // Check if both old and new password are provided
@@ -187,7 +189,9 @@ app.put("/reset-pass", async (req, res) => {
 // Edit user route
 app.put("/edit-user", async (req, res) => {
   if (userId == null) {
-    return res.status(401).json({ error: "Unauthorized. Please log in." });
+    return res
+      .status(401)
+      .json({ error: "Unauthorized. Please log in.", status: 401 });
   }
   const { firstname, lastname, username } = req.body;
 
@@ -272,7 +276,9 @@ app.get("/get-user", (req, res) => {
 // Logout Route (for session-based authentication)
 app.post("/logout", (req, res) => {
   if (userId == null) {
-    return res.status(401).json({ error: "Unauthorized. Please log in." });
+    return res
+      .status(401)
+      .json({ error: "Unauthorized. Please log in.", status: 401 });
   }
   userId = null;
 
@@ -281,7 +287,9 @@ app.post("/logout", (req, res) => {
 
 app.get("/get-products", (req, res) => {
   if (userId == null) {
-    return res.status(401).json({ error: "Unauthorized. Please log in." });
+    return res
+      .status(401)
+      .json({ error: "Unauthorized. Please log in.", status: 401 });
   }
   const userQuery = "SELECT first_name, last_name FROM users WHERE id = ?";
   const productQuery = "SELECT * FROM products";
@@ -304,7 +312,9 @@ app.get("/get-products", (req, res) => {
 // Get Product by ID
 app.get("/get-product/:id", (req, res) => {
   if (userId == null) {
-    return res.status(401).json({ error: "Unauthorized. Please log in." });
+    return res
+      .status(401)
+      .json({ error: "Unauthorized. Please log in.", status: 401 });
   }
   const productId = req.params.id;
 
@@ -330,7 +340,9 @@ app.get("/get-product/:id", (req, res) => {
 // Add Product Route
 app.post("/add-product", (req, res) => {
   if (userId == null) {
-    return res.status(401).json({ error: "Unauthorized. Please log in." });
+    return res
+      .status(401)
+      .json({ error: "Unauthorized. Please log in.", status: 401 });
   }
   const { name, size, color, price, qty, threshold, status } = req.body;
 
@@ -368,7 +380,9 @@ app.post("/add-product", (req, res) => {
 // Update Existing Product - PUT /products/:id
 app.put("/update-product/:id", (req, res) => {
   if (userId == null) {
-    return res.status(401).json({ error: "Unauthorized. Please log in." });
+    return res
+      .status(401)
+      .json({ error: "Unauthorized. Please log in.", status: 401 });
   }
   const { id } = req.params; // Product ID from URL
   const { name, size, color, price, qty, status, threshold } = req.body; // Updated product details from request body
@@ -411,7 +425,9 @@ app.put("/update-product/:id", (req, res) => {
 // Delete Product - DELETE /products/:id
 app.delete("/delete-product/:id", (req, res) => {
   if (userId == null) {
-    return res.status(401).json({ error: "Unauthorized. Please log in." });
+    return res
+      .status(401)
+      .json({ error: "Unauthorized. Please log in.", status: 401 });
   }
   const { id } = req.params; // Product ID from URL
 
@@ -434,7 +450,9 @@ app.delete("/delete-product/:id", (req, res) => {
 // Shop Route (POST) to update product quantity based on the purchase
 app.post("/shop", (req, res) => {
   if (userId == null) {
-    return res.status(401).json({ error: "Unauthorized. Please log in." });
+    return res
+      .status(401)
+      .json({ error: "Unauthorized. Please log in.", status: 401 });
   }
   const { product_id, quantity } = req.body;
 
