@@ -8,7 +8,6 @@ A modern, secure, and efficient inventory management system built with Node.js, 
 
   - Secure login and registration
   - Password reset functionality
-  - Session management
   - User profile management
 
 - **Product Management**
@@ -31,7 +30,6 @@ A modern, secure, and efficient inventory management system built with Node.js, 
   - Node.js
   - Express.js
   - MySQL
-  - Express Session
   - Bcrypt for password hashing
 
 - **Frontend**
@@ -46,7 +44,7 @@ A modern, secure, and efficient inventory management system built with Node.js, 
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
+- Node.js (v20 or higher)
 - MySQL Server
 - npm (Node Package Manager)
 
@@ -87,6 +85,10 @@ A modern, secure, and efficient inventory management system built with Node.js, 
    ```
 
 The application will be available at `http://localhost:3000`
+
+The default username is `john`
+
+The default password `hello`
 
 ## 📁 Project Structure
 

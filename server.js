@@ -1,11 +1,9 @@
 require("dotenv").config();
 const express = require("express");
-const session = require("express-session");
 const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const MySQLStore = require("express-mysql-session")(session);
 
 const app = express();
 
@@ -30,26 +28,6 @@ db.connect((err) => {
   }
   console.log("Connected to database.");
 });
-
-// Session Store
-const sessionStore = new MySQLStore({}, db);
-
-// Session Middleware
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    store: sessionStore,
-    resave: true,
-    saveUninitialized: false,
-    cookie: {
-      // maxAge: 1000 * 60 * 60 * 24, // 1 day
-      httpOnly: false,
-
-      // secure: process.env.NODE_ENV === "production",
-      // sameSite: "strict",
-    },
-  })
-);
 
 // Routes
 
@@ -78,7 +56,7 @@ app.post("/register", async (req, res) => {
         }
 
         // If username is not taken, hash the password and insert the new user
-        const hashedPassword = await bcrypt.hash(password, 10); // Salt rounds = 10
+        const hashedPassword = await bcrypt.hash(password, 12); // Salt rounds = 10
         const insertUserQuery =
           "INSERT INTO users (first_name, last_name, username, password) VALUES (?, ?, ?, ?)";
         db.query(
