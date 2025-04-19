@@ -1,54 +1,51 @@
 // Handle form submission
-const form = document.getElementById("addProductForm");
-const messageElement = document.getElementById("message");
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("create-product-form");
+  const messageElement = document.getElementById("message");
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault(); // Prevent default form submission
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
 
-  // Collect form data
-  const name = document.getElementById("name").value;
-  const size = document.getElementById("size").value;
-  const color = document.getElementById("color").value;
-  const price = parseFloat(document.getElementById("price").value);
-  const qty = parseInt(document.getElementById("qty").value, 10);
-  const threshold = parseInt(document.getElementById("threshold").value, 10);
-  const status = document.getElementById("status").value;
+    // Get form data
+    const formData = {
+      name: document.getElementById("name").value,
+      category: document.getElementById("category").value,
+      size: document.getElementById("size").value,
+      color: document.getElementById("color").value,
+      price: document.getElementById("price").value,
+      qty: document.getElementById("qty").value,
+      threshold: document.getElementById("threshold").value,
+      status: document.getElementById("status").value,
+    };
 
-  try {
-    // Send a POST request to the /add-product API
-    const response = await fetch("http://localhost:3000/add-product", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        size,
-        color,
-        price,
-        qty,
-        threshold,
-        status,
-      }),
-    });
+    try {
+      const response = await fetch("http://localhost:3000/create-product", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    response.json().then((resp) => {
-      if (resp && "success" in resp) {
-        showAlert("success", "Product added successfully!");
-        form.reset;
+      const data = await response.json();
+
+      console.log(data);
+      if (data.success) {
+        showAlert("success", "Product created successfully!");
         setTimeout(() => {
           window.location.href = "products.html";
         }, 1500);
-      } else if (resp.status == 401) {
-        showAlert("error", resp.error);
+      } else if (data.status === 401) {
+        showAlert("error", data.error);
         setTimeout(() => {
-          window.location.href = "index.html";
+          window.location.href = "login.html";
         }, 1500);
       } else {
-        showAlert("error", resp.error);
+        showAlert("error", data.error || "Failed to create product");
       }
-    });
-  } catch (error) {
-    showAlert("error", "An error occurred. Please try again.");
-  }
+    } catch (error) {
+      console.error("Error creating product:", error);
+      showAlert("error", "An error occurred while creating the product");
+    }
+  });
 });

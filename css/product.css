@@ -43,7 +43,7 @@ body {
 
 /* Header Styles with Animation */
 header {
-  background-color: #6a0dad;
+  background-color: #1b263b;
   color: white;
   padding: 20px;
   text-align: center;
@@ -120,7 +120,7 @@ h1 {
 /* Add hover/focus effect */
 .search-bar:hover,
 .search-bar:focus-within {
-  border-color: #6a0dad;
+  border-color: #1b263b;
 }
 
 /* Style the search icon */
@@ -170,13 +170,13 @@ td {
 }
 
 th {
-  background-color: #6a0dad;
+  background-color: #1b263b;
   color: white;
 }
 
 /* Buttons with Animation */
 .button {
-  background-color: #6a0dad;
+  background-color: #1b263b;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -186,7 +186,7 @@ th {
 }
 
 .button:hover {
-  background-color: #5b0c97;
+  background-color: #0d1b2a;
 }
 
 .quantity-low {
@@ -326,7 +326,7 @@ footer {
 }
 
 .modal-submit {
-  background: #6a0dad;
+  background: #1b263b;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -337,7 +337,7 @@ footer {
 }
 
 .modal-submit:hover {
-  background: #5b0c97;
+  background: #0d1b2a;
 }
 
 /* Modal Fade-in Animation */
@@ -384,7 +384,7 @@ table tr:hover {
   }
 
   .modal input:focus {
-    border-color: #5b0c97;
+    border-color: #0d1b2a;
     box-shadow: 0 3px 10px rgba(106, 13, 173, 0.3);
   }
 

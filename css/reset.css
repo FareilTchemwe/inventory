@@ -4,9 +4,9 @@
   top: 25px;
   cursor: pointer;
   font-size: 1rem;
-  color: #6a0dad;
+  color: #1b263b;
 }
 
 #toggleOldPassword:hover {
-  color: #5b0c97; /* Darker purple */
+  color: #0d1b2a; /* Darker purple */
 }
