@@ -275,7 +275,7 @@ function loadLowStockItems() {
           <td><span class="status-badge ${getStatusClass(
             item
           )}">${getStatusText(item)}</span></td>
-          <td><button class="action-btn" onclick="openModal('${
+          <td><button class="action-btn" onclick="reorderProduct('${
             item.id
           }')">Reorder</button></td>
         `;
@@ -325,65 +325,4 @@ function refreshDashboard() {
   setupCharts();
   loadLowStockItems();
   showAlert("success", "Dashboard refreshed successfully");
-}
-// Modal control functions
-const modal = document.getElementById("quantityModal");
-const productIdInput = document.getElementById("product_id");
-const qtyInput = document.getElementById("qty");
-
-function closeModal() {
-  modal.style.display = "none";
-}
-
-window.addEventListener("click", function (event) {
-  if (event.target === modal) {
-    closeModal();
-  } else if (event.target == document.getElementById("confirmModal")) {
-    closeConfirmModal();
-  }
-});
-// Handle form submission using JavaScript to make a POST request to /shop
-const shopForm = document.getElementById("shop-form");
-
-shopForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const productId = productIdInput.value;
-  const quantity = shopForm.querySelector('input[name="quantity"]').value;
-
-  try {
-    const response = await fetch("http://localhost:3000/shop", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        product_id: productId,
-        quantity: quantity,
-      }),
-    });
-
-    const resp = await response.json();
-    if (resp && resp.success) {
-      showAlert("success", "Quantity updated successfully!");
-      closeModal();
-      loadProducts();
-    } else if (resp.status === 401) {
-      showAlert("error", resp.error);
-      setTimeout(() => {
-        window.location.href = "index.html";
-      }, 1500);
-    } else {
-      showAlert("error", resp.error || "Failed to update quantity");
-    }
-  } catch (error) {
-    console.error("Error updating quantity:", error);
-    showAlert("error", "An error occurred. Please try again.");
-  }
-});
-
-function openModal(productId, qty) {
-  productIdInput.value = productId;
-  qtyInput.max = qty;
-  modal.style.display = "block";
 }
