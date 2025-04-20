@@ -1,0 +1,346 @@
+// Sidebar Toggle Functionality
+// ============================
+const sidebar = document.getElementById("sidebar");
+const mainContent = document.getElementById("mainContent");
+const toggleSidebar = document.getElementById("toggleSidebar");
+let userId;
+
+toggleSidebar.addEventListener("click", () => {
+  sidebar.classList.toggle("collapsed");
+  mainContent.classList.toggle("expanded");
+});
+
+mobileNavToggle.addEventListener("click", () => {
+  console.log("click");
+  sidebar.classList.toggle("open");
+  sidebar.classList.toggle("collapsed");
+  mainContent.classList.toggle("expanded");
+});
+
+if (window.innerWidth <= 992) {
+  sidebar.classList.add("collapsed");
+  mainContent.classList.add("expanded");
+}
+
+// ============================
+// Main Entry
+// ============================
+document.addEventListener("DOMContentLoaded", () => {
+  checkAuth()
+    .then((isAuthenticated) => {
+      if (!isAuthenticated) {
+        showAlert("error", "Requires Authentication");
+        setTimeout(() => (window.location.href = "login.html"), 500);
+      } else {
+        loadProducts();
+        loadUserInfo();
+        setupShopModal();
+      }
+    })
+    .catch(() => {
+      showAlert("error", "Could not be authenticated. Please try again");
+      setTimeout(() => (window.location.href = "login.html"), 500);
+    });
+});
+
+// ============================
+// API Utility Functions
+// ============================
+const BASE_URL = "http://localhost:3000";
+
+async function apiGet(endpoint) {
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  return handleResponse(response);
+}
+
+async function apiPost(endpoint, body = {}) {
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify(body),
+  });
+  return handleResponse(response);
+}
+
+async function apiPut(endpoint, body = {}) {
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify(body),
+  });
+  return handleResponse(response);
+}
+
+function handleResponse(response) {
+  if (!response.ok) {
+    if (response.status === 401) {
+      showAlert("error", "Session expired. Please login again.");
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1500);
+      throw new Error("Unauthorized");
+    }
+    throw new Error("Network response was not ok");
+  }
+  return response.json();
+}
+
+// ============================
+// Authentication Check
+// ============================
+async function checkAuth() {
+  try {
+    const data = await apiGet("/check-auth");
+    userId = data.userId;
+    return data.authenticated;
+  } catch {
+    return false;
+  }
+}
+
+// ============================
+// Product Management
+// ============================
+const productsTable = document.getElementById("product-table-body");
+const productsContainer = document.querySelector(".products-container");
+
+// Pagination variables
+let currentPage = 1;
+const itemsPerPage = 10;
+let totalPages = 1;
+let allProducts = [];
+let currentProductId = null;
+
+// Pagination elements
+const prevPageBtn = document.getElementById("prevPage");
+const nextPageBtn = document.getElementById("nextPage");
+const pageInfo = document.getElementById("pageInfo");
+
+async function loadProducts() {
+  try {
+    const data = await apiGet(`/get-products`);
+    if (data && data.success && Array.isArray(data.products)) {
+      // Store all products and update pagination
+      allProducts = data.products;
+      totalPages = Math.ceil(allProducts.length / itemsPerPage);
+      updatePagination();
+      renderProducts();
+
+      // Add event listeners for replenish buttons
+      document.querySelectorAll(".btn-shop").forEach((button) => {
+        button.addEventListener("click", function () {
+          const productId = this.getAttribute("data-product-id");
+          const productName = this.getAttribute("data-product-name");
+          showShopModal(productId, productName);
+        });
+      });
+    } else {
+      showAlert("error", data.error || "Failed to load products");
+    }
+  } catch (error) {
+    console.error("Error loading products:", error);
+    showAlert("error", "Error loading products");
+  }
+}
+
+// Create a product row
+function createProductRow(product) {
+  const statusClass =
+    product.status === "available"
+      ? "status-available"
+      : product.status === "finished"
+      ? "status-finished"
+      : "status-low";
+
+  const statusText =
+    product.status === "available"
+      ? "Available"
+      : product.status === "finished"
+      ? "Finished"
+      : "Low";
+
+  return `
+    <tr>
+      <td>${product.name}</td>
+      <td>${product.category}</td>
+      <td>${product.current_stock}</td>
+      <td>${product.minimum_stock}</td>
+      <td>${parseFloat(product.price).toFixed(2)} FCFA</td>
+      <td><span class="status ${statusClass}">${statusText}</span></td>
+      <td class="table-actions">
+        <button class="btn-shop control-btn" data-product-id="${
+          product.id
+        }" data-product-name="${product.name}">
+          <i class="fas fa-cart-plus"></i>
+        </button>
+        <button class="btn-edit control-btn" onclick="editProduct(${
+          product.id
+        })">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn-delete control-btn" onclick="deleteProduct(${
+          product.id
+        })">
+          <i class="fas fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+  `;
+}
+
+// Render products for current page
+function renderProducts() {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const productsToShow = allProducts.slice(startIndex, endIndex);
+
+  if (productsToShow.length === 0) {
+    productsTable.innerHTML = `
+      <!-- Empty state will be shown when there are no products -->
+
+      <tr>
+        <td colspan="8">
+          <div class="empty-state">
+            <i class="fas fa-box-open"></i>
+            <h3>No products found</h3>
+            <p>
+              Add your first product or try a different search term
+            </p>
+          </div>
+        </td>
+      </tr>
+    `;
+  } else {
+    productsTable.innerHTML = productsToShow
+      .map((product) => createProductRow(product))
+      .join("");
+  }
+}
+
+// Update pagination controls
+function updatePagination() {
+  pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+  prevPageBtn.disabled = currentPage === 1;
+  nextPageBtn.disabled = currentPage === totalPages;
+}
+
+// Event listeners for pagination
+prevPageBtn.addEventListener("click", () => {
+  if (currentPage > 1) {
+    currentPage--;
+    updatePagination();
+    renderProducts();
+  }
+});
+
+nextPageBtn.addEventListener("click", () => {
+  if (currentPage < totalPages) {
+    currentPage++;
+    updatePagination();
+    renderProducts();
+  }
+});
+
+// Search functionality
+document.getElementById("searchInput").addEventListener("input", function () {
+  const searchValue = this.value.toLowerCase();
+
+  // Filter products based on search value
+  const filteredProducts = allProducts.filter(
+    (product) =>
+      product.name.toLowerCase().includes(searchValue) ||
+      (product.category && product.category.toLowerCase().includes(searchValue))
+  );
+
+  // Update products with filtered list
+  if (filteredProducts.length === 0) {
+    productsTable.innerHTML = `
+      <tr>
+        <td colspan="8" style="text-align: center; padding: 2rem;">
+          No products match your search
+        </td>
+      </tr>
+    `;
+  } else {
+    productsTable.innerHTML = filteredProducts
+      .map((product) => createProductRow(product))
+      .join("");
+  }
+});
+
+// Function to handle editing a product
+function editProduct(productId) {
+  window.location.href = `edit-product.html?id=${productId}`;
+}
+
+// Function to handle deleting a product
+function deleteProduct(productId) {
+  currentProductId = productId;
+  document.getElementById("confirmModal").style.display = "block";
+}
+
+//sell the products
+async function shopProduct(productId, quantity) {
+  try {
+    const data = await apiPut("/update-product", {
+      productId: productId,
+      quantity: quantity,
+    });
+
+    if (data && data.success) {
+      showAlert("success", "Product sold");
+      setTimeout(() => {
+        loadProducts();
+      }, 500);
+    }
+  } catch (error) {
+    // console.error("Error selling product:", error);
+    showAlert("error", "An error occurred while selling the product.");
+  }
+}
+
+// Load user info and remove skeletons
+async function loadUserInfo() {
+  apiGet("/get-user").then((data) => {
+    document.getElementById(
+      "user-name-skeleton"
+    ).outerHTML = `<div class="user-name">${data.user.first_name} ${data.user.last_name}</div>`;
+  });
+}
+
+function showShopModal(productId, productName) {
+  const modal = document.getElementById("shopModal");
+  document.getElementById("productName").textContent = productName;
+  // document.getElementById("shopQuantity").value = "1";
+
+  // Show modal
+  modal.classList.add("active");
+
+  // Focus on quantity input
+  document.getElementById("shopQuantity").focus();
+
+  // Set up confirm button
+  const confirmButton = document.getElementById("confirmShop");
+  // Remove previous event listeners
+  const newConfirmButton = confirmButton.cloneNode(true);
+  confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
+
+  // Add new event listener
+  newConfirmButton.addEventListener("click", function () {
+    const quantity = parseInt(document.getElementById("shopQuantity").value);
+
+    shopProduct(productId, quantity);
+    closeShopModal();
+  });
+}

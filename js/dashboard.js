@@ -4,6 +4,7 @@
 const sidebar = document.getElementById("sidebar");
 const mainContent = document.getElementById("mainContent");
 const toggleSidebar = document.getElementById("toggleSidebar");
+let userId;
 
 toggleSidebar.addEventListener("click", () => {
   sidebar.classList.toggle("collapsed");
@@ -78,6 +79,18 @@ async function apiPost(endpoint, body = {}) {
   return handleResponse(response);
 }
 
+async function apiPut(endpoint, body = {}) {
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify(body),
+  });
+  return handleResponse(response);
+}
+
 function handleResponse(response) {
   if (!response.ok) {
     if (response.status === 401) {
@@ -95,6 +108,7 @@ function handleResponse(response) {
 async function checkAuth() {
   try {
     const data = await apiGet("/check-auth");
+    userId = data.userId;
     return data.authenticated;
   } catch {
     return false;
@@ -264,7 +278,16 @@ function loadLowStockItems() {
       tableBody.innerHTML = "";
 
       if (data.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="5" class="no-data">No low stock items found.</td></tr>`;
+        tableBody.innerHTML = `<!-- Empty state will be shown when there are no products -->
+
+      <tr>
+        <td colspan="8">
+          <div class="empty-state">
+            <i class="fas fa-box-open"></i>
+            <h3>No products found</h3>
+          </div>
+        </td>
+      </tr>`;
         return;
       }
 
@@ -530,13 +553,15 @@ function closeReplenishModal() {
 }
 
 function replenishProduct(productId, quantity) {
-  apiPost(`/replenish`, {
+  apiPut(`/replenish`, {
     productId: productId,
     quantity: quantity,
   })
     .then(() => {
       showAlert("success", "Replenish request submitted successfully");
-      refreshDashboard();
+      setTimeout(() => {
+        refreshDashboard();
+      }, 500);
     })
     .catch((error) => {
       console.error("Error submitting replenish request:", error);
@@ -571,9 +596,9 @@ function refreshDashboard() {
 
 // Load user info and remove skeletons
 async function loadUserInfo() {
-  apiGet("/user").then((data) => {
+  apiGet("/get-user").then((data) => {
     document.getElementById(
       "user-name-skeleton"
-    ).outerHTML = `<div class="user-name">${data.user[0].first_name} ${data.user[0].last_name}</div>`;
+    ).outerHTML = `<div class="user-name">${data.user.first_name} ${data.user.last_name}</div>`;
   });
 }

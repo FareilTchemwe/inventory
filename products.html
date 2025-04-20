@@ -3,113 +3,169 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="css/product.css" rel="stylesheet" />
-    <link href="css/alert.css" rel="stylesheet" />
-    <link href="css/confirm.css" rel="stylesheet" />
-    <!-- Font Awesome -->
+    <title>Products - Inventory Management</title>
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/alert.css" />
+    <link rel="stylesheet" href="css/products.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/confirm.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <title>Dress Store Inventory</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
   </head>
 
   <body>
-    <header>
-      <h1>Dress Store Inventory</h1>
-    </header>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <i class="fas fa-boxes"></i>
+        </div>
+        <div class="logo-text">Inventory Pro</div>
+      </div>
 
-    <main>
-      <div class="container">
-        <a href="account.html"
-          ><button class="logout-button">Account</button></a
-        >
-        <h2>Inventory List</h2>
+      <div class="sidebar-menu">
+        <a href="dashboard.html" class="menu-item">
+          <div class="menu-icon">
+            <i class="fas fa-th-large"></i>
+          </div>
+          <div class="menu-text">Dashboard</div>
+        </a>
 
-        <!-- Search Bar -->
-        <div class="search-container">
-          <div class="search-bar">
-            <i class="fas fa-search search-icon"></i>
-            <input
-              type="text"
-              id="searchInput"
-              placeholder="Search by dress name..."
-            />
+        <a href="products.html" class="menu-item active">
+          <div class="menu-icon">
+            <i class="fas fa-box"></i>
+          </div>
+          <div class="menu-text">Products</div>
+        </a>
+
+        <a href="categories.html" class="menu-item">
+          <div class="menu-icon">
+            <i class="fas fa-tags"></i>
+          </div>
+          <div class="menu-text">Categories</div>
+        </a>
+
+        <a href="orders.html" class="menu-item">
+          <div class="menu-icon">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="menu-text">Orders</div>
+        </a>
+
+        <a href="reports.html" class="menu-item">
+          <div class="menu-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="menu-text">Reports</div>
+        </a>
+
+        <a href="settings.html" class="menu-item">
+          <div class="menu-icon">
+            <i class="fas fa-cog"></i>
+          </div>
+          <div class="menu-text">Settings</div>
+        </a>
+      </div>
+
+      <a href="/account.html">
+        <div class="user-section" id="user-section">
+          <i class="fa fa-user-circle" style="color: white"></i>
+          <div class="user-info">
+            <div class="skeleton skeleton-text" id="user-name-skeleton"></div>
           </div>
         </div>
+      </a>
 
-        <!-- Alert Section (Hidden by default) -->
-        <div id="alert" class="alert alert-hidden">
-          <p id="alertMessage"></p>
-          <button id="closeAlert" class="close-alert" onclick="closeAlert()">
-            x
-          </button>
-        </div>
-
-        <!-- Confirmation Modal -->
-        <div id="confirmModal" class="confirm-modal">
-          <div class="confirm-modal-content">
-            <h3>Are you sure you want to delete this product?</h3>
-            <div class="buttons">
-              <button class="confirm" onclick="confirmDelete()">
-                Yes, Delete
-              </button>
-              <button class="cancel" onclick="closeConfirmModal()">
-                Cancel
-              </button>
+      <div class="toggle-sidebar" id="toggleSidebar">
+        <i class="fas fa-chevron-left"></i>
+      </div>
+    </div>
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+      <!-- Alert Section (Hidden by default) -->
+      <div id="alert" class="alert alert-hidden">
+        <p id="alertMessage"></p>
+        <button id="closeAlert" class="close-alert" onclick="closeAlert()">
+          x
+        </button>
+      </div>
+      <div class="products-container">
+        <header class="dashboard-header">
+          <div class="top-header">
+            <h1>Products</h1>
+            <!-- Mobile Navigation Toggle -->
+            <div class="mobile-nav-toggle" id="mobileNavToggle">
+              <i class="fas fa-bars" style="margin: 12px"></i>
             </div>
           </div>
-        </div>
 
-        <a href="create-product.html"
-          ><button class="button">Add New Dress</button></a
-        >
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Size</th>
-                <th>Color</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="product-table-body">
-              <!-- Product rows will be dynamically added here -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <footer>
-        <p>&copy; 2024 Dress Store. All rights reserved.</p>
-      </footer>
-    </main>
+          <div class="header-actions">
+            <button
+              class="btn btn-secondary"
+              id="refreshBtn"
+              onclick="refreshDashboard()"
+            >
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <a href="add-product.html" class="btn btn-primary">
+              <i class="fas fa-plus"></i> New Product
+            </a>
+          </div>
+        </header>
+        <div class="dashboard-card">
+          <div class="products-header">
+            <h1>Products Inventory</h1>
+            <div class="products-actions">
+              <div class="search-container">
+                <input
+                  type="text"
+                  id="searchInput"
+                  placeholder="Search products..."
+                  class="form-control"
+                />
+                <i class="fas fa-search"></i>
+              </div>
+            </div>
+          </div>
 
-    <!-- Modal -->
-    <div id="quantityModal" class="modal">
-      <div class="modal-content">
-        <button class="modal-close" onclick="closeModal()">×</button>
-        <h3 class="modal-header">Enter Quantity</h3>
-        <form id="shop-form">
-          <input type="hidden" name="product_id" id="product_id" />
-          <input
-            type="number"
-            name="quantity"
-            placeholder="Enter quantity"
-            min="0"
-            required
-            id="qty"
-          />
-          <button type="submit" class="modal-submit">Submit</button>
-        </form>
+          <div class="table-responsive">
+            <table class="products-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Current Stock</th>
+                  <th>Minimum Stock</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="product-table-body"></tbody>
+            </table>
+          </div>
+
+          <div class="pagination">
+            <button id="prevPage" class="btn btn-secondary">
+              <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <span id="pageInfo"></span>
+            <button id="nextPage" class="btn btn-secondary">
+              Next <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
     <script src="js/alert.js"></script>
-    <script src="js/product.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/products.js"></script>
   </body>
 </html>

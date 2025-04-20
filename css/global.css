@@ -4,9 +4,17 @@
   --secondary: #415a77;
   --accent: #778da9;
   --light: #e0e1dd;
-  --success: #4caf50;
-  --warning: #ffc107;
-  --danger: #f44336;
+  --success: #2ecc71;
+  --success-light: #e3fcef;
+  --success-dark: #27ae60;
+  --warning: #f39c12;
+  --warning-light: #fff8e1;
+  --warning-dark: #e67e22;
+  --danger: #e74c3c;
+  --danger-light: #ffebee;
+  --danger-dark: #c0392b;
+  --text-primary: #333;
+  --text-secondary: #666;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --transition: all 0.3s ease;
 }
