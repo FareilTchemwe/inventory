@@ -53,20 +53,6 @@
           <div class="menu-text">Categories</div>
         </a>
 
-        <a href="orders.html" class="menu-item">
-          <div class="menu-icon">
-            <i class="fas fa-shopping-cart"></i>
-          </div>
-          <div class="menu-text">Orders</div>
-        </a>
-
-        <a href="reports.html" class="menu-item">
-          <div class="menu-icon">
-            <i class="fas fa-chart-line"></i>
-          </div>
-          <div class="menu-text">Reports</div>
-        </a>
-
         <a href="settings.html" class="menu-item">
           <div class="menu-icon">
             <i class="fas fa-cog"></i>
@@ -192,7 +178,7 @@
             <div class="modal-body">
               <p id="main-text"></p>
               <div class="input-group">
-                <input type="hidden" id="Id" class="form-control" required />
+                <input type="hidden" id="Id" class="form-control" />
                 <label for="saleDate">Date Sold</label>
                 <input
                   type="date"
@@ -265,10 +251,13 @@
             <p id="main-text"></p>
           </div>
           <div class="modal-footer">
+            <input type="hidden" id="close-id" class="form-control" />
             <button class="btn btn-secondary" id="confirmation-cancel-btn">
               Cancel
             </button>
-            <button class="btn btn-danger">Delete</button>
+            <button class="btn btn-danger" onclick="deleteProduct()">
+              Delete
+            </button>
           </div>
         </div>
       </div>

@@ -18,6 +18,7 @@ const confirmationCancelButton = document.getElementById(
 // Functions to open and close modals
 function openModal(id, title, message) {
   // Set the appropriate type class
+
   document.getElementById("modal-title").textContent = title;
   document.getElementById("main-text").textContent = message;
   document.getElementById("Id").value = id;
@@ -26,8 +27,8 @@ function openModal(id, title, message) {
   document.body.style.overflow = "hidden";
 }
 
-function openConfirmModal(message) {
-  document.getElementById("main-text").textContent = message;
+function openConfirmModal(id) {
+  document.getElementById("close-id").value = id;
   confirmationModalOverlay.classList.add("active");
   document.body.style.overflow = "hidden";
 }

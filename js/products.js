@@ -12,7 +12,6 @@ toggleSidebar.addEventListener("click", () => {
 });
 
 mobileNavToggle.addEventListener("click", () => {
-  console.log("click");
   sidebar.classList.toggle("open");
   sidebar.classList.toggle("collapsed");
   mainContent.classList.toggle("expanded");
@@ -82,6 +81,17 @@ async function apiPut(endpoint, body = {}) {
   });
   return handleResponse(response);
 }
+async function apiDelete(endpoint, body = {}) {
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify(body),
+  });
+  return handleResponse(response);
+}
 
 function handleResponse(response) {
   if (!response.ok) {
@@ -142,7 +152,7 @@ async function loadProducts() {
     }
   } catch (error) {
     console.error("Error loading products:", error);
-    showAlert("error", "Error loading products");
+    showAlert("error", data.error || "Error loading products");
   }
 }
 
@@ -182,7 +192,9 @@ function createProductRow(product) {
         })">
           <i class="fas fa-edit"></i>
         </button>
-        <button class="btn-delete control-btn confirm-trigger" onclick="openConfirmModal('re you sure that you want to delete this product ? The action cannot be undone.')">
+        <button class="btn-delete control-btn confirm-trigger" onclick="openConfirmModal(${
+          product.id
+        })">
           <i class="fas fa-trash"></i>
         </button>
       </td>
@@ -275,12 +287,6 @@ function editProduct(productId) {
   window.location.href = `edit-product.html?id=${productId}`;
 }
 
-// Function to handle deleting a product
-function deleteProduct(productId) {
-  currentProductId = productId;
-  document.getElementById("confirmModal").style.display = "block";
-}
-
 //sell the products
 async function sellProduct() {
   //get the data from the input fields
@@ -312,8 +318,35 @@ async function sellProduct() {
       }
     } catch (error) {
       // console.error("Error selling product:", error);
-      showAlert("error", "An error occurred while selling the product.");
+      showAlert(
+        "error",
+        data.error || "An error occurred while selling the product."
+      );
     }
+  }
+}
+
+async function deleteProduct() {
+  const modal = document.getElementById("confirmation-modal-overlay");
+  const productId = document.getElementById("close-id").value;
+
+  try {
+    const data = await apiDelete("/delete-product", {
+      productId: productId,
+    });
+
+    if (data && data.success) {
+      showAlert("success", "Product Deleted");
+      setTimeout(() => {
+        closeModal(modal);
+        refreshTable();
+      }, 500);
+    }
+  } catch {
+    showAlert(
+      "error",
+      data.error || "An error occured while deleting the product."
+    );
   }
 }
 

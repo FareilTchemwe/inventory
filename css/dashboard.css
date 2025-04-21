@@ -199,6 +199,16 @@ a {
   margin: 0 auto;
 }
 
+/* Empty state styling */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
 /* Header styles */
 .dashboard-header {
   display: flex;

@@ -12,7 +12,6 @@ toggleSidebar.addEventListener("click", () => {
 });
 
 mobileNavToggle.addEventListener("click", () => {
-  console.log("click");
   sidebar.classList.toggle("open");
   sidebar.classList.toggle("collapsed");
   mainContent.classList.toggle("expanded");
@@ -42,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
         initializeDashboard();
         setupCharts();
         loadLowStockItems();
-        setupReplenishModal();
         loadUserInfo();
       }
     })
@@ -300,20 +298,11 @@ function loadLowStockItems() {
           <td><span class="status-badge ${getStatusClass(
             item
           )}">${getStatusText(item)}</span></td>
-          <td><button class="action-btn replenish-btn" data-product-id="${
+          <td><button class="action-btn replenish-btn" onclick="openModal(${
             item.id
-          }" data-product-name="${item.name}">Replenish</button></td>
+          }, 'Replenish Product', 'Enter the quantity of product added.')">Replenish</button></td>
         `;
         tableBody.appendChild(row);
-      });
-
-      // Add event listeners for replenish buttons
-      document.querySelectorAll(".replenish-btn").forEach((button) => {
-        button.addEventListener("click", function () {
-          const productId = this.getAttribute("data-product-id");
-          const productName = this.getAttribute("data-product-name");
-          showReplenishModal(productId, productName);
-        });
       });
     })
     .catch((error) => {
@@ -324,248 +313,26 @@ function loadLowStockItems() {
     });
 }
 
-// ============================
-// Replenish Modal
-// ============================
-function setupReplenishModal() {
-  // Create modal HTML and append to body
-  const modalHTML = `
-    <div id="replenishModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Replenish Stock</h2>
-          <button class="close-modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>Enter quantity to replenish for <span id="productName"></span>:</p>
-          <div class="input-group">
-            <label for="replenishQuantity">Quantity</label>
-            <input type="number" id="replenishQuantity" min="1" value="1" class="form-control">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button id="cancelReplenish" class="btn btn-secondary">Cancel</button>
-          <button id="confirmReplenish" class="btn btn-primary">Confirm</button>
-        </div>
-      </div>
-    </div>
-  `;
+function replenishProduct() {
+  const productId = document.getElementById("Id").value;
+  const quantity = document.getElementById("quantity").value;
+  //get the modal
+  const modal = document.getElementById("standard-modal-overlay");
 
-  // Add modal CSS
-  const modalStyle = document.createElement("style");
-  modalStyle.textContent = `
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .modal.active {
-      display: flex;
-      animation: fadeIn 0.3s;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    .modal-content {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      width: 90%;
-      max-width: 500px;
-      position: relative;
-      overflow: hidden;
-      transform: scale(0.9);
-      transition: transform 0.3s;
-    }
-    
-    .modal.active .modal-content {
-      transform: scale(1);
-    }
-    
-    .modal-header {
-      background: #f8f9fa;
-      padding: 15px 20px;
-      border-bottom: 1px solid #e9ecef;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .modal-header h2 {
-      margin: 0;
-      font-size: 1.25rem;
-      color: #212529;
-    }
-    
-    .close-modal {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #6c757d;
-      transition: color 0.2s;
-    }
-    
-    .close-modal:hover {
-      color: #212529;
-    }
-    
-    .modal-body {
-      padding: 20px;
-    }
-    
-    #productName {
-      font-weight: bold;
-    }
-    
-    .input-group {
-      margin-top: 15px;
-    }
-    
-    .input-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 500;
-    }
-    
-    .form-control {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ced4da;
-      border-radius: 4px;
-      font-size: 1rem;
-      transition: border-color 0.15s ease-in-out;
-    }
-    
-    .form-control:focus {
-      border-color: #80bdff;
-      outline: 0;
-      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    }
-    
-    .modal-footer {
-      padding: 15px 20px;
-      border-top: 1px solid #e9ecef;
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-    }
-    
-    .btn {
-      cursor: pointer;
-      padding: 8px 16px;
-      border-radius: 4px;
-      font-weight: 500;
-      transition: all 0.2s;
-    }
-    
-    .btn-primary {
-      background-color: #415a77;
-      color: white;
-      border: none;
-    }
-    
-    .btn-primary:hover {
-      background-color: #344760;
-    }
-    
-    .btn-secondary {
-      background-color: #6c757d;
-      border: none;
-      color: white;
-    }
-    
-    .btn-secondary:hover {
-      background-color: #5a6268;
-    }
-    
-    /* Responsive adjustments */
-    @media (max-width: 576px) {
-      .modal-content {
-        width: 95%;
-      }
-      
-      .modal-footer {
-        flex-direction: column;
-      }
-      
-      .btn {
-        width: 100%;
-        margin-bottom: 5px;
-      }
-    }
-  `;
-
-  document.head.appendChild(modalStyle);
-  document.body.insertAdjacentHTML("beforeend", modalHTML);
-
-  // Set up event listeners for modal
-  document
-    .querySelector(".close-modal")
-    .addEventListener("click", closeReplenishModal);
-  document
-    .getElementById("cancelReplenish")
-    .addEventListener("click", closeReplenishModal);
-}
-
-function showReplenishModal(productId, productName) {
-  const modal = document.getElementById("replenishModal");
-  document.getElementById("productName").textContent = productName;
-  document.getElementById("replenishQuantity").value = "1";
-
-  // Show modal
-  modal.classList.add("active");
-
-  // Focus on quantity input
-  document.getElementById("replenishQuantity").focus();
-
-  // Set up confirm button
-  const confirmButton = document.getElementById("confirmReplenish");
-  // Remove previous event listeners
-  const newConfirmButton = confirmButton.cloneNode(true);
-  confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
-
-  // Add new event listener
-  newConfirmButton.addEventListener("click", function () {
-    const quantity = parseInt(
-      document.getElementById("replenishQuantity").value
-    );
-
-    replenishProduct(productId, quantity);
-    closeReplenishModal();
-  });
-}
-
-function closeReplenishModal() {
-  const modal = document.getElementById("replenishModal");
-  modal.classList.remove("active");
-}
-
-function replenishProduct(productId, quantity) {
   apiPut(`/replenish`, {
     productId: productId,
     quantity: quantity,
   })
     .then(() => {
-      showAlert("success", "Replenish request submitted successfully");
+      closeModal(modal);
+      showAlert("success", "Replenish saved");
       setTimeout(() => {
         refreshDashboard();
       }, 500);
     })
     .catch((error) => {
       console.error("Error submitting replenish request:", error);
-      showAlert("error", "Error submitting replenish request");
+      showAlert("error", data.error || "Error submitting replenish request");
     });
 }
 
@@ -591,7 +358,6 @@ function refreshDashboard() {
   initializeDashboard();
   setupCharts();
   loadLowStockItems();
-  showAlert("success", "Dashboard refreshed successfully");
 }
 
 // Load user info and remove skeletons

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/global.css" />
     <link rel="stylesheet" href="css/dashboard.css" />
     <link rel="stylesheet" href="css/alert.css" />
+    <link rel="stylesheet" href="css/modal.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
@@ -47,20 +48,6 @@
             <i class="fas fa-tags"></i>
           </div>
           <div class="menu-text">Categories</div>
-        </a>
-
-        <a href="orders.html" class="menu-item">
-          <div class="menu-icon">
-            <i class="fas fa-shopping-cart"></i>
-          </div>
-          <div class="menu-text">Orders</div>
-        </a>
-
-        <a href="reports.html" class="menu-item">
-          <div class="menu-icon">
-            <i class="fas fa-chart-line"></i>
-          </div>
-          <div class="menu-text">Reports</div>
         </a>
 
         <a href="settings.html" class="menu-item">
@@ -208,8 +195,60 @@
       </div>
     </div>
 
+    <!-- Standard Modal -->
+    <div class="modal-overlay" id="standard-modal-overlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="modal-title"></h3>
+          <button class="modal-close">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="modal-body">
+              <p id="main-text"></p>
+              <div class="input-group">
+                <input type="hidden" id="Id" class="form-control" />
+                <label for="quantity">Quantity</label>
+                <input
+                  type="number"
+                  id="quantity"
+                  min="1"
+                  value="1"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" id="standard-cancel-btn">
+              Cancel
+            </button>
+            <button class="btn btn-primary" onclick="replenishProduct()">
+              Confirm
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="js/alert.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/dashboard.js"></script>
+    <script src="js/modal.js"></script>
   </body>
 </html>
