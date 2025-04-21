@@ -152,7 +152,7 @@ async function loadProducts() {
     }
   } catch (error) {
     console.error("Error loading products:", error);
-    showAlert("error", data.error || "Error loading products");
+    showAlert("error", "Error loading products");
   }
 }
 
@@ -179,7 +179,7 @@ function createProductRow(product) {
       <td>${product.category}</td>
       <td>${product.current_stock}</td>
       <td>${product.minimum_stock}</td>
-      <td>${parseFloat(product.price).toFixed(2)} FCFA</td>
+      <td>${parseFloat(product.price).toFixed(2)}</td>
       <td><span class="status ${statusClass}">${statusText}</span></td>
       <td class="table-actions">
         <button class="btn-shop control-btn" onclick="openModal(${
@@ -318,10 +318,7 @@ async function sellProduct() {
       }
     } catch (error) {
       // console.error("Error selling product:", error);
-      showAlert(
-        "error",
-        data.error || "An error occurred while selling the product."
-      );
+      showAlert("error", "An error occurred while selling the product.");
     }
   }
 }
@@ -343,10 +340,7 @@ async function deleteProduct() {
       }, 500);
     }
   } catch {
-    showAlert(
-      "error",
-      data.error || "An error occured while deleting the product."
-    );
+    showAlert("error", "An error occured while deleting the product.");
   }
 }
 

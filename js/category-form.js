@@ -7,7 +7,7 @@ const BASE_URL = "http://localhost:3000";
 // Utilities
 // ============================
 
-function getProductIdFromURL() {
+function getCategoryIdFromURL() {
   const params = new URLSearchParams(window.location.search);
   return params.get("id");
 }
@@ -74,18 +74,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         setTimeout(() => (window.location.href = "login.html"), 500);
       } else {
         initLoader();
-        getCategories();
-
-        const productId = getProductIdFromURL();
-        if (productId) {
-          populateProductDetails(productId);
+        const categoryId = getCategoryIdFromURL();
+        if (categoryId) {
+          populateCategoryDetails(categoryId);
           updateFormForEdit();
         }
-
         initInputAnimations();
       }
     })
-    .catch(() => {
+    .catch((error) => {
       showAlert("error", "Could not be authenticated. Please try again");
       setTimeout(() => (window.location.href = "login.html"), 500);
     });
@@ -122,12 +119,12 @@ function initInputAnimations() {
 
 function updateFormForEdit() {
   document.querySelector(".product-form-header h1").textContent =
-    "Update Product";
+    "Update Category";
   document.querySelector(".product-form-header p").textContent =
-    "Edit the details below to update this product";
+    "Edit the details below to update this category";
   document.querySelector(
     "button[type='submit']"
-  ).innerHTML = `<i class="fas fa-save"></i> Update Product`;
+  ).innerHTML = `<i class="fas fa-save"></i> Update Category`;
 }
 
 // ============================
@@ -141,11 +138,11 @@ form.addEventListener("submit", function (event) {
 
   const isValid = validateForm();
   if (isValid) {
-    const productId = getProductIdFromURL();
-    if (productId) {
-      updateProduct(productId);
+    const categoryId = getCategoryIdFromURL();
+    if (categoryId) {
+      updateCategory(categoryId);
     } else {
-      createProduct();
+      createCategory();
     }
   }
 });
@@ -180,10 +177,6 @@ function validateForm() {
 function getFormData() {
   return {
     name: document.getElementById("name").value.trim(),
-    categoryId: document.getElementById("category").value,
-    currentStock: parseInt(document.getElementById("qty").value, 10),
-    price: parseFloat(document.getElementById("price").value),
-    minimumStock: parseInt(document.getElementById("threshold").value, 10),
   };
 }
 
@@ -191,18 +184,18 @@ function getFormData() {
 // CRUD Operations
 // ============================
 
-async function createProduct() {
+async function createCategory() {
   try {
-    const response = await apiPost("/create-product", getFormData());
+    const response = await apiPost("/create-category", getFormData());
 
     showLoader();
     if (response.success) {
       hideLoader();
-      showAlert("success", "Product created successfully!");
+      showAlert("success", "Category created successfully!");
       form.reset();
     } else {
       hideLoader();
-      showAlert("error", response.message || "Failed to create product.");
+      showAlert("error", "Failed to create category.");
     }
   } catch {
     hideLoader();
@@ -210,22 +203,22 @@ async function createProduct() {
   }
 }
 
-async function updateProduct(productId) {
+async function updateCategory(categoryId) {
   try {
     const updatedData = {
-      productId: productId,
+      categoryId: categoryId,
       ...getFormData(),
     };
 
-    const response = await apiPut(`/update-product/`, updatedData);
+    const response = await apiPut(`/update-category/`, updatedData);
 
     showLoader();
     if (response.success) {
       hideLoader();
-      showAlert("success", "Product updated successfully!");
+      showAlert("success", "Category updated successfully!");
     } else {
       hideLoader();
-      showAlert("error", response.message || "Failed to update product.");
+      showAlert("error", "Failed to update category.");
     }
   } catch {
     hideLoader();
@@ -233,50 +226,16 @@ async function updateProduct(productId) {
   }
 }
 
-// ============================
-// Category & Product Pre-fill
-// ============================
-
-async function getCategories() {
+async function populateCategoryDetails(categoryId) {
   try {
-    const data = await apiGet("/get-categories");
-    if (data?.success && Array.isArray(data.categories)) {
-      categories = data.categories;
-      populateCategoryDropdown(categories);
+    const data = await apiGet(`/get-category/${categoryId}`);
+    if (data.success && data.category) {
+      const category = data.category[0];
+      document.getElementById("name").value = category.name || "";
     } else {
-      showAlert("error", "Failed to load categories.");
-    }
-  } catch {
-    showAlert("error", "Error fetching categories.");
-  }
-}
-
-function populateCategoryDropdown(categories) {
-  const categorySelect = document.getElementById("category");
-  categorySelect.innerHTML = `<option value="">Select Category</option>`;
-  categories.forEach((category) => {
-    const option = document.createElement("option");
-    option.value = category.id;
-    option.textContent = category.name;
-    categorySelect.appendChild(option);
-  });
-}
-
-async function populateProductDetails(productId) {
-  try {
-    const data = await apiGet(`/get-product/${productId}`);
-    if (data.success && data.product) {
-      const product = data.product[0];
-      console.log(product);
-      document.getElementById("name").value = product.name || "";
-      document.getElementById("category").value = product.category_id || "";
-      document.getElementById("price").value = product.price || 0;
-      document.getElementById("qty").value = product.current_stock || 0;
-      document.getElementById("threshold").value = product.minimum_stock || 0;
-    } else {
-      showAlert("error", "Failed to load product details.");
+      showAlert("error", "Failed to load category details.");
     }
   } catch (error) {
-    showAlert("error", "Error fetching product.");
+    showAlert("error", "Error fetching category.");
   }
 }
