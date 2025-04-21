@@ -1,4 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
+  checkAuth()
+    .then((isAuthenticated) => {
+      if (isAuthenticated) {
+        window.location.href = "dashboard.html";
+      }
+    })
+    .catch(() => {});
+
   // Initialize GSAP animations
   gsap.registerPlugin(ScrollTrigger);
 
@@ -38,3 +46,45 @@ document.addEventListener("DOMContentLoaded", () => {
     ease: "power2.out",
   });
 });
+
+// ============================
+// API Utility Functions
+// ============================
+const BASE_URL = "http://localhost:3000";
+
+async function apiGet(endpoint) {
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  return handleResponse(response);
+}
+
+function handleResponse(response) {
+  if (!response.ok) {
+    if (response.status === 401) {
+      showAlert("error", "Session expired. Please login again.");
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1500);
+      throw new Error("Unauthorized");
+    }
+    throw new Error("Network response was not ok");
+  }
+  return response.json();
+}
+
+// ============================
+// Authentication Check
+// ============================
+async function checkAuth() {
+  try {
+    const data = await apiGet("/check-auth");
+    userId = data.userId;
+    return data.authenticated;
+  } catch {
+    return false;
+  }
+}

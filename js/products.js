@@ -4,6 +4,7 @@ const sidebar = document.getElementById("sidebar");
 const mainContent = document.getElementById("mainContent");
 const toggleSidebar = document.getElementById("toggleSidebar");
 let userId;
+let productId;
 
 toggleSidebar.addEventListener("click", () => {
   sidebar.classList.toggle("collapsed");
@@ -32,9 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
         showAlert("error", "Requires Authentication");
         setTimeout(() => (window.location.href = "login.html"), 500);
       } else {
+        initLoader();
         loadProducts();
         loadUserInfo();
-        setupShopModal();
       }
     })
     .catch(() => {
@@ -136,15 +137,6 @@ async function loadProducts() {
       totalPages = Math.ceil(allProducts.length / itemsPerPage);
       updatePagination();
       renderProducts();
-
-      // Add event listeners for replenish buttons
-      document.querySelectorAll(".btn-shop").forEach((button) => {
-        button.addEventListener("click", function () {
-          const productId = this.getAttribute("data-product-id");
-          const productName = this.getAttribute("data-product-name");
-          showShopModal(productId, productName);
-        });
-      });
     } else {
       showAlert("error", data.error || "Failed to load products");
     }
@@ -156,6 +148,7 @@ async function loadProducts() {
 
 // Create a product row
 function createProductRow(product) {
+  productId = product.id;
   const statusClass =
     product.status === "available"
       ? "status-available"
@@ -179,9 +172,9 @@ function createProductRow(product) {
       <td>${parseFloat(product.price).toFixed(2)} FCFA</td>
       <td><span class="status ${statusClass}">${statusText}</span></td>
       <td class="table-actions">
-        <button class="btn-shop control-btn" data-product-id="${
+        <button class="btn-shop control-btn" onclick="openModal(${
           product.id
-        }" data-product-name="${product.name}">
+        }, 'Sell ${product.name}', 'Enter the Quantity Sold')">
           <i class="fas fa-cart-plus"></i>
         </button>
         <button class="btn-edit control-btn" onclick="editProduct(${
@@ -189,9 +182,7 @@ function createProductRow(product) {
         })">
           <i class="fas fa-edit"></i>
         </button>
-        <button class="btn-delete control-btn" onclick="deleteProduct(${
-          product.id
-        })">
+        <button class="btn-delete control-btn confirm-trigger" onclick="openConfirmModal('re you sure that you want to delete this product ? The action cannot be undone.')">
           <i class="fas fa-trash"></i>
         </button>
       </td>
@@ -291,22 +282,38 @@ function deleteProduct(productId) {
 }
 
 //sell the products
-async function shopProduct(productId, quantity) {
-  try {
-    const data = await apiPut("/update-product", {
-      productId: productId,
-      quantity: quantity,
-    });
+async function sellProduct() {
+  //get the data from the input fields
+  const productId = document.getElementById("Id").value;
+  const quantity = document.getElementById("quantity").value;
+  const date = document.getElementById("saleDate").value;
 
-    if (data && data.success) {
-      showAlert("success", "Product sold");
-      setTimeout(() => {
-        loadProducts();
-      }, 500);
+  //get the modal
+  const modal = document.getElementById("standard-modal-overlay");
+
+  if (!quantity || !date) {
+    showAlert("error", "All fields are required");
+  } else if (quantity < 0) {
+    showAlert("warning", "Quantity cannot be negative");
+  } else {
+    try {
+      const data = await apiPut("/sell-product", {
+        productId: productId,
+        quantity: quantity,
+        saleDate: date,
+      });
+
+      if (data && data.success) {
+        showAlert("success", "Sale Recorded");
+        setTimeout(() => {
+          closeModal(modal);
+          refreshTable();
+        }, 500);
+      }
+    } catch (error) {
+      // console.error("Error selling product:", error);
+      showAlert("error", "An error occurred while selling the product.");
     }
-  } catch (error) {
-    // console.error("Error selling product:", error);
-    showAlert("error", "An error occurred while selling the product.");
   }
 }
 
@@ -319,28 +326,10 @@ async function loadUserInfo() {
   });
 }
 
-function showShopModal(productId, productName) {
-  const modal = document.getElementById("shopModal");
-  document.getElementById("productName").textContent = productName;
-  // document.getElementById("shopQuantity").value = "1";
-
-  // Show modal
-  modal.classList.add("active");
-
-  // Focus on quantity input
-  document.getElementById("shopQuantity").focus();
-
-  // Set up confirm button
-  const confirmButton = document.getElementById("confirmShop");
-  // Remove previous event listeners
-  const newConfirmButton = confirmButton.cloneNode(true);
-  confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
-
-  // Add new event listener
-  newConfirmButton.addEventListener("click", function () {
-    const quantity = parseInt(document.getElementById("shopQuantity").value);
-
-    shopProduct(productId, quantity);
-    closeShopModal();
-  });
+function refreshTable() {
+  showLoader();
+  loadProducts();
+  setTimeout(() => {
+    hideLoader();
+  }, 500);
 }

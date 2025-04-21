@@ -1,20 +1,5 @@
-.modal-trigger {
-  background-color: #2563eb;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
-}
-
-.modal-trigger:hover {
-  background-color: #1d4ed8;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
-}
-
-.modal-trigger:active {
+.modal-trigger:active,
+.confirm-trigger:active {
   transform: translateY(0);
 }
 
@@ -114,29 +99,64 @@
   gap: 12px;
 }
 
-.btn {
+.modal-btn {
   padding: 10px 16px;
   border-radius: 6px;
   font-weight: 500;
   font-size: 14px;
 }
 
-.btn-secondary {
+.modal-btn-secondary {
   background-color: #f3f4f6;
   color: #4b5563;
 }
 
-.btn-secondary:hover {
+.modal-btn-secondary:hover {
   background-color: #e5e7eb;
 }
 
-.btn-primary {
+.modal-btn-primary {
   background-color: #2563eb;
   color: white;
 }
 
-.btn-primary:hover {
+.modal-btn-primary:hover {
   background-color: #1d4ed8;
+}
+
+.modal-btn-danger {
+  background-color: #dc2626;
+  color: white;
+}
+
+.modal-btn-danger:hover {
+  background-color: #b91c1c;
+}
+
+/* Confirmation modal specific styles */
+.confirmation-modal {
+  max-width: 400px;
+}
+
+.confirmation-modal .modal-header {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.confirmation-modal .modal-header h3 {
+  color: #b91c1c;
+}
+
+.confirmation-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.confirmation-icon svg {
+  width: 48px;
+  height: 48px;
+  color: #dc2626;
 }
 
 /* Responsive adjustments */
@@ -149,8 +169,34 @@
     flex-direction: column;
   }
 
-  .btn {
+  .modal-btn {
     width: 100%;
     text-align: center;
   }
+}
+
+.input-group {
+  margin-top: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.form-control:focus {
+  margin-bottom: 20px;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
