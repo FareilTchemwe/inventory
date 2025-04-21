@@ -284,7 +284,7 @@ document.getElementById("searchInput").addEventListener("input", function () {
 
 // Function to handle editing a product
 function editProduct(productId) {
-  window.location.href = `edit-product.html?id=${productId}`;
+  window.location.href = `product-form.html?id=${productId}`;
 }
 
 //sell the products

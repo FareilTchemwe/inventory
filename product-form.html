@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Product - Inventory Management</title>
-    <link rel="stylesheet" href="css/global.css" />
     <link rel="stylesheet" href="css/product-form.css" />
     <link rel="stylesheet" href="css/alert.css" />
+    <link rel="stylesheet" href="css/loader.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -35,42 +35,13 @@
 
         <div class="form-group">
           <label for="category">Category</label>
-          <input
-            type="text"
-            id="category"
-            name="category"
-            class="form-control"
-            required
-            placeholder="Enter product category"
-          />
+          <select id="category" name="category" class="form-control" required>
+            <option value="">Select Category</option>
+          </select>
         </div>
 
         <div class="form-group">
-          <label for="size">Size</label>
-          <input
-            type="text"
-            id="size"
-            name="size"
-            class="form-control"
-            required
-            placeholder="Enter product size"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="color">Color</label>
-          <input
-            type="text"
-            id="color"
-            name="color"
-            class="form-control"
-            required
-            placeholder="Enter product color"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="price">Price (FCFA)</label>
+          <label for="price">Price</label>
           <input
             type="number"
             id="price"
@@ -109,16 +80,6 @@
           />
         </div>
 
-        <div class="form-group">
-          <label for="status">Status</label>
-          <select id="status" name="status" class="form-control" required>
-            <option value="">Select status</option>
-            <option value="available">Available</option>
-            <option value="low">Low Stock</option>
-            <option value="finished">Finished</option>
-          </select>
-        </div>
-
         <div class="form-actions">
           <a href="products.html" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Back to Products
@@ -138,7 +99,9 @@
       </div>
     </div>
 
-    <script src="js/create-product.js"></script>
+    <script src="js/loader.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/product-form.js"></script>
     <script src="js/alert.js"></script>
   </body>
 </html>

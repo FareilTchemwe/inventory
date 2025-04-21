@@ -44,3 +44,214 @@
     transform: rotate(360deg);
   }
 }
+
+/* Dark Mode Variables */
+:root {
+  --dark-bg: #121212;
+  --dark-overlay: rgba(18, 18, 18, 0.9);
+  --dark-text: #e0e0e0;
+  --dark-text-secondary: #a0a0a0;
+  --dark-primary: #5d8cb3;
+  --dark-surface: #1e1e1e;
+  --dark-loader-track: #2a2a2a;
+}
+
+/* Original Light Mode Styles */
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.loader-container.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loader-message {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Dark Mode Styles using Media Query */
+@media (prefers-color-scheme: dark) {
+  .loader-container {
+    background-color: var(--dark-overlay);
+  }
+
+  .loader {
+    border: 5px solid var(--dark-loader-track);
+    border-top: 5px solid var(--dark-primary);
+  }
+
+  .loader-message {
+    color: var(--dark-text);
+  }
+}
+
+/* Manual Dark Mode Class */
+body.dark-mode .loader-container {
+  background-color: var(--dark-overlay);
+}
+
+body.dark-mode .loader {
+  border: 5px solid var(--dark-loader-track);
+  border-top: 5px solid var(--dark-primary);
+}
+
+body.dark-mode .loader-message {
+  color: var(--dark-text);
+}
+
+/* Enhanced Loader Styles for Both Modes */
+/* Pulse effect for the loader message */
+.loader-message {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Additional loader types for both themes */
+.loader.dots {
+  width: auto;
+  height: auto;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.loader.dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #3498db;
+  display: inline-block;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+@media (prefers-color-scheme: dark) {
+  .loader.dots span {
+    background-color: var(--dark-primary);
+  }
+}
+
+body.dark-mode .loader.dots span {
+  background-color: var(--dark-primary);
+}
+
+.loader.dots span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loader.dots span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* Progress bar loader variant */
+.loader.progress {
+  width: 200px;
+  height: 6px;
+  border: none;
+  border-radius: 3px;
+  background-color: #f3f3f3;
+  position: relative;
+  overflow: hidden;
+}
+
+.loader.progress::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 30%;
+  background-color: #3498db;
+  animation: progress 1.5s ease-in-out infinite;
+  border-radius: 3px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .loader.progress {
+    background-color: var(--dark-loader-track);
+  }
+
+  .loader.progress::after {
+    background-color: var(--dark-primary);
+  }
+}
+
+body.dark-mode .loader.progress {
+  background-color: var(--dark-loader-track);
+}
+
+body.dark-mode .loader.progress::after {
+  background-color: var(--dark-primary);
+}
+
+@keyframes progress {
+  0% {
+    left: -30%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Smooth transitions */
+.loader-container,
+.loader,
+.loader-message {
+  transition: all 0.3s ease;
+}

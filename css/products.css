@@ -402,3 +402,155 @@ body {
   margin-bottom: 1.5rem;
   max-width: 400px;
 }
+
+/* Dark Mode Variables */
+
+/* Dark Mode Theme */
+.dark-mode {
+  /* Background colors */
+  --background-color: #1a1c23;
+  --background-secondary: #252836;
+
+  /* Text colors */
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+
+  /* Border & shadow */
+  --border-color: #374151;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  /* Accent colors - slightly adjusted for dark mode */
+  --primary: #5d75f3;
+  --primary-dark: #4361ee;
+  --success-light: rgba(16, 185, 129, 0.2);
+  --warning-light: rgba(245, 158, 11, 0.2);
+  --danger-light: rgba(239, 68, 68, 0.2);
+  --light: #1f2937;
+}
+
+/* Dark Mode Styles */
+.dark-mode body {
+  background-color: #121317;
+  color: var(--text-primary);
+}
+
+.dark-mode .dashboard-card {
+  background: var(--background-color);
+}
+
+.dark-mode .products-table {
+  background: var(--background-color);
+}
+
+.dark-mode .products-table th {
+  background: var(--background-secondary);
+}
+
+.dark-mode .products-table tbody tr:hover {
+  background: rgba(55, 65, 81, 0.3);
+}
+
+.dark-mode .search-container input {
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.dark-mode .search-container input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(93, 117, 243, 0.25);
+}
+
+.dark-mode .action-btn:hover {
+  background: var(--background-secondary);
+}
+
+.dark-mode .btn-secondary {
+  background-color: var(--background-secondary);
+  color: var(--text-secondary);
+}
+
+.dark-mode .btn-secondary:hover {
+  background-color: #323644;
+}
+
+.dark-mode .pagination button {
+  background: var(--background-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.dark-mode .pagination button:not(:disabled):hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.dark-mode .empty-state i {
+  color: #4b5563;
+}
+
+/* Dark mode toggle button styles */
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  transition: var(--transition);
+  margin-left: auto;
+}
+
+.theme-toggle:hover {
+  background-color: var(--background-secondary);
+  color: var(--primary);
+}
+
+.dark-mode .theme-toggle {
+  color: #fbbf24;
+}
+
+/* Add prefers-color-scheme media query for automatic dark mode */
+@media (prefers-color-scheme: dark) {
+  body:not(.light-mode) {
+    background-color: #121317;
+    color: var(--text-primary);
+  }
+
+  :root:not(.light-mode) {
+    /* Dark mode variables */
+    --background-color: #1a1c23;
+    --background-secondary: #252836;
+    --text-primary: #e5e7eb;
+    --text-secondary: #9ca3af;
+    --border-color: #374151;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --primary: #5d75f3;
+    --primary-dark: #4361ee;
+    --success-light: rgba(16, 185, 129, 0.2);
+    --warning-light: rgba(245, 158, 11, 0.2);
+    --danger-light: rgba(239, 68, 68, 0.2);
+    --light: #1f2937;
+  }
+}
+
+/* Add transition for smooth theme switching */
+body,
+button,
+input,
+table,
+.dashboard-card,
+.products-table,
+.btn,
+.pagination button,
+.action-btn,
+.status {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease, box-shadow 0.3s ease;
+}

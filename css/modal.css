@@ -200,3 +200,150 @@
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
+
+/* Dark Mode Theme */
+.dark-mode {
+  /* Background colors */
+  --background-color: #1a1c23;
+  --background-secondary: #252836;
+
+  /* Text colors */
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+
+  /* Border & shadow */
+  --border-color: #374151;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  /* Accent colors - slightly adjusted for dark mode */
+  --primary: #5d75f3;
+  --primary-dark: #4361ee;
+  --success-light: rgba(16, 185, 129, 0.2);
+  --warning-light: rgba(245, 158, 11, 0.2);
+  --danger-light: rgba(239, 68, 68, 0.2);
+  --light: #1f2937;
+}
+
+@media (prefers-color-scheme: dark) {
+  body:not(.light-mode) {
+    background-color: #121317;
+    color: var(--text-primary);
+  }
+
+  :root:not(.light-mode) {
+    /* Dark mode variables */
+    --background-color: #1a1c23;
+    --background-secondary: #252836;
+    --text-primary: #e5e7eb;
+    --text-secondary: #9ca3af;
+    --border-color: #374151;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --primary: #5d75f3;
+    --primary-dark: #4361ee;
+    --success-light: rgba(16, 185, 129, 0.2);
+    --warning-light: rgba(245, 158, 11, 0.2);
+    --danger-light: rgba(239, 68, 68, 0.2);
+    --light: #1f2937;
+  }
+}
+
+/* Dark Mode Modal Styles */
+.dark-mode .modal-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.dark-mode .modal {
+  background-color: var(--background-color);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode .modal-header {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dark-mode .modal-header h3 {
+  color: var(--text-primary);
+}
+
+.dark-mode .modal-close {
+  color: var(--text-secondary);
+}
+
+.dark-mode .modal-close:hover {
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
+}
+
+.dark-mode .modal-body p {
+  color: var(--text-secondary);
+}
+
+/* Dark mode buttons */
+.dark-mode .modal-btn-secondary {
+  background-color: var(--background-secondary);
+  color: var(--text-secondary);
+}
+
+.dark-mode .modal-btn-secondary:hover {
+  background-color: #323644;
+}
+
+.dark-mode .modal-btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.dark-mode .modal-btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.dark-mode .modal-btn-danger {
+  background-color: var(--danger);
+  color: white;
+}
+
+.dark-mode .modal-btn-danger:hover {
+  background-color: var(--danger-dark);
+}
+
+/* Dark mode confirmation modal */
+.dark-mode .confirmation-modal .modal-header {
+  background-color: rgba(220, 38, 38, 0.15);
+  color: #f87171;
+}
+
+.dark-mode .confirmation-modal .modal-header h3 {
+  color: #f87171;
+}
+
+.dark-mode .confirmation-icon svg {
+  color: #ef4444;
+}
+
+/* Dark mode form controls */
+.dark-mode .form-control {
+  background-color: var(--background-secondary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.dark-mode .form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem rgba(93, 117, 243, 0.25);
+}
+
+.dark-mode .input-group label {
+  color: var(--text-primary);
+}
+
+/* Add subtle transitions for smooth theme switching */
+.modal,
+.modal-header,
+.modal-content,
+.modal-footer,
+.modal-btn,
+.form-control,
+.modal-close {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease, box-shadow 0.3s ease;
+}
