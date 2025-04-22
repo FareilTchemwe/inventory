@@ -1,4 +1,11 @@
+/* Base Variables - Light Mode Default */
 :root {
+  --primary-dark: #0d1b2a;
+  --primary: #1b263b;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+
   /* Light Mode Variables */
   --bg-color: #f9fafb;
   --card-bg: #ffffff;
@@ -10,16 +17,18 @@
   --hover-bg: #f3f4f6;
 }
 
-/* Dark Mode */
-.dark-mode {
-  --bg-color: #111827;
-  --card-bg: #1f2937;
-  --text-color: #f9fafb;
-  --text-secondary: #9ca3af;
-  --border-color: #374151;
-  --input-bg: #374151;
-  --input-border: #4b5563;
-  --hover-bg: #374151;
+/* Dark Mode Variables - Applied automatically when system preference is dark */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #111827;
+    --card-bg: #1f2937;
+    --text-color: #f9fafb;
+    --text-secondary: #9ca3af;
+    --border-color: #374151;
+    --input-bg: #374151;
+    --input-border: #4b5563;
+    --hover-bg: #374151;
+  }
 }
 
 * {
@@ -50,24 +59,6 @@ body {
   margin-bottom: 24px;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--border-color);
-}
-
-.theme-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  color: var(--text-color);
-  font-size: 14px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-}
-
-.theme-toggle svg {
-  margin-right: 8px;
 }
 
 .settings-grid {

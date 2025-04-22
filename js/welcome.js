@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // checkAuth()
-  //   .then((isAuthenticated) => {
-  //     if (isAuthenticated) {
-  //       window.location.href = "dashboard.html";
-  //     }
-  //   })
-  //   .catch(() => {});
+  checkAuth()
+    .then((isAuthenticated) => {
+      if (isAuthenticated) {
+        window.location.href = "dashboard.html";
+      }
+    })
+    .catch(() => {});
 
   // Initialize GSAP animations
   gsap.registerPlugin(ScrollTrigger);
