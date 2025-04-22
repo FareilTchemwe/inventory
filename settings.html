@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account Settings</title>
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/settings.css" />
+    <link rel="stylesheet" href="css/modal.css" />
+    <link rel="stylesheet" href="css/alert.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="settings-header">
+        <h1>Account Settings</h1>
+        <button class="theme-toggle" id="theme-toggle">
+          <svg
+            id="light-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg
+            id="dark-icon"
+            style="display: none"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <span id="theme-text">Dark Mode</span>
+        </button>
+      </div>
+
+      <div class="settings-grid">
+        <div class="settings-sidebar">
+          <a href="#" class="nav-item active">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            Profile
+          </a>
+          <button class="btn btn-danger">Log out</button>
+        </div>
+
+        <div class="settings-content">
+          <div class="profile-header">
+            <div class="avatar-wrapper">
+              <div class="avatar" id="accronym"></div>
+              <div class="avatar-upload">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+            </div>
+            <div class="profile-info">
+              <h1 id="fullName"></h1>
+              <p id="user-email"></p>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2>Personal Information</h2>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">Username</label>
+                <input type="text" id="username" />
+              </div>
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" />
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" />
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="form-section">
+            <h2>Password Settings</h2>
+            <div class="form-group">
+              <label for="currentPassword">Current Password</label>
+              <div class="password-input-wrapper">
+                <input
+                  type="password"
+                  id="currentPassword"
+                  placeholder="Enter your current password"
+                />
+                <button class="password-toggle">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                    ></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <div class="password-input-wrapper">
+                  <input
+                    type="password"
+                    id="newPassword"
+                    placeholder="Enter new password"
+                  />
+                  <button class="password-toggle">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                      ></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="password-input-wrapper">
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm new password"
+                  />
+                  <button class="password-toggle">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                      ></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-outline">Forgot password?</button>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="form-section">
+            <h2>Delete Account</h2>
+            <p>
+              Once you delete your account, there is no going back. Please be
+              certain.
+            </p>
+            <div class="form-group">
+              <button class="btn btn-danger">Delete Account</button>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-outline">Cancel</button>
+            <button class="btn btn-primary">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Box -->
+    <div id="alert" class="alert alert-hidden">
+      <div class="alert-content">
+        <span id="alertMessage"></span>
+        <button id="closeAlert" class="close-alert">&times;</button>
+      </div>
+    </div>
+
+    <!-- Standard Modal -->
+    <div class="modal-overlay" id="standard-modal-overlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="modal-title"></h3>
+          <button class="modal-close">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="modal-body">
+              <p id="main-text"></p>
+              <div class="input-group">
+                <input type="hidden" id="Id" class="form-control" />
+                <label for="saleDate">Date Sold</label>
+                <input
+                  type="date"
+                  id="saleDate"
+                  class="form-control"
+                  required
+                />
+                <label for="quantity">Quantity</label>
+                <input
+                  type="number"
+                  id="quantity"
+                  min="1"
+                  value="1"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" id="standard-cancel-btn">
+              Cancel
+            </button>
+            <button class="btn btn-primary" onclick="sellProduct()">
+              Confirm
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmation-modal-overlay">
+      <div class="modal confirmation-modal">
+        <div class="modal-header">
+          <h3>Confirm Deletion</h3>
+          <button class="modal-close">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="confirmation-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
+              </svg>
+            </div>
+            <p id="main-text"></p>
+          </div>
+          <div class="modal-footer">
+            <input type="hidden" id="close-id" class="form-control" />
+            <button class="btn btn-secondary" id="confirmation-cancel-btn">
+              Cancel
+            </button>
+            <button class="btn btn-danger" onclick="deleteProduct()">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/dark-mode.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/alert.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/settings.js"></script>
+  </body>
+</html>
