@@ -270,8 +270,12 @@ document.getElementById("searchInput").addEventListener("input", function () {
   if (filteredProducts.length === 0) {
     productsTable.innerHTML = `
       <tr>
-        <td colspan="8" style="text-align: center; padding: 2rem;">
-          No products match your search
+        <td colspan="8">
+          <div class="empty-state">
+            <i class="fas fa-box-open"></i>
+            <h3>No products match your search</h3>
+            
+          </div>
         </td>
       </tr>
     `;

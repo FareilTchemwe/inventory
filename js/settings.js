@@ -73,6 +73,18 @@ async function apiGet(endpoint) {
   return handleResponse(response);
 }
 
+async function apiDelete(endpoint, body = {}) {
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify(body),
+  });
+  return handleResponse(response);
+}
+
 function handleResponse(response) {
   if (!response.ok) {
     if (response.status === 401) {
@@ -132,7 +144,7 @@ async function loadUserInfo() {
         firstName.value = data.user.first_name;
         lastName.value = data.user.last_name;
         email.value = userEmailMain.innerText = data.user.email;
-        fullName.innerText = firstName.value + lastName.value;
+        fullName.innerText = firstName.value + " " + lastName.value;
         accronym.textContent =
           firstName.value.charAt(0).toUpperCase() +
           lastName.value.charAt(0).toUpperCase();
@@ -153,18 +165,21 @@ async function updateProfile() {
 
   apiPut("/update-user", {
     username: username,
-    firstName: firstName,
-    lastName: lastName,
+    firstname: firstName,
+    lastname: lastName,
     email: email,
   })
     .then((data) => {
       if (data && data.success) {
         showAlert("success", "Your details have been updated");
-      } else {
-        showAlert("error", "Failed to update user data");
+        setTimeout(() => {
+          loadUserInfo();
+        }, 500);
+      } else if (data.error) {
+        showAlert("error", data.error);
       }
     })
-    .catch(() => {
+    .catch((error) => {
       showAlert("error", "An error occured when updating user data");
     });
 }
@@ -174,19 +189,25 @@ async function resetPassword() {
   const newPassword = document.getElementById("newPassword").value;
   const confirmPassword = document.getElementById("confirmPassword").value;
 
+  if (!currentPassword || !newPassword || !confirmPassword) {
+    return showAlert("error", "Fill the password fields");
+  }
   if (newPassword !== confirmPassword) {
     return showAlert("error", "Password do not match");
   }
 
-  apiPut("/update-password", {
-    currentPassword: currentPassword,
+  apiPut("/reset-pass", {
+    oldPassword: currentPassword,
     newPassword: newPassword,
   })
     .then((data) => {
       if (data && data.success) {
         showAlert("success", "Your Password have been updated");
-      } else {
-        showAlert("error", "Failed to update password");
+        setTimeout(() => {
+          loadUserInfo();
+        }, 500);
+      } else if (data.error) {
+        showAlert("error", data.error);
       }
     })
     .catch(() => {

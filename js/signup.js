@@ -48,6 +48,7 @@ signUpForm.addEventListener("submit", async (event) => {
 
     response.json().then((resp) => {
       if (resp && "success" in resp) {
+        setAuthData(resp.token, resp.expiresIn);
         showAlert("succes", "Account Created Successfully. Redirecting");
         setTimeout(() => {
           // Redirect to dashboard

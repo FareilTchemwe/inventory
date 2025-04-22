@@ -74,7 +74,7 @@
             </svg>
             Profile
           </a>
-          <button class="btn btn-danger">Log out</button>
+          <button class="btn btn-danger" onclick="logout()">Log out</button>
         </div>
 
         <div class="settings-content">
@@ -218,7 +218,9 @@
               </div>
             </div>
             <div class="form-group">
-              <button class="btn btn-outline">Forgot password?</button>
+              <button class="btn btn-outline" onclick="resetPassword()">
+                Reset Password
+              </button>
             </div>
           </div>
 
@@ -231,13 +233,17 @@
               certain.
             </p>
             <div class="form-group">
-              <button class="btn btn-danger">Delete Account</button>
+              <button class="btn btn-danger" onclick="openConfirmModal()">
+                Delete Account
+              </button>
             </div>
           </div>
 
           <div class="form-actions">
             <button class="btn btn-outline">Cancel</button>
-            <button class="btn btn-primary">Save Changes</button>
+            <button class="btn btn-primary" onclick="updateProfile()">
+              Save Changes
+            </button>
           </div>
         </div>
       </div>
@@ -347,14 +353,17 @@
                 />
               </svg>
             </div>
-            <p id="main-text"></p>
+            <p>
+              This action is permanent and cannot be undone. All your data will
+              be permanently deleted, and you will lose access to your account.
+            </p>
           </div>
           <div class="modal-footer">
             <input type="hidden" id="close-id" class="form-control" />
             <button class="btn btn-secondary" id="confirmation-cancel-btn">
               Cancel
             </button>
-            <button class="btn btn-danger" onclick="deleteProduct()">
+            <button class="btn btn-danger" onclick="deleteAccount()">
               Delete
             </button>
           </div>

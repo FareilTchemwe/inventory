@@ -225,7 +225,7 @@ function renderCategories() {
       <tr>
         <td colspan="8">
           <div class="empty-state">
-            <i class="fas fa-box-open"></i>
+            <i class="fas fa-tags"></i>
             <h3>No category found</h3>
             <p>
               Add your first category or try a different search term
@@ -269,25 +269,27 @@ nextPageBtn.addEventListener("click", () => {
 document.getElementById("searchInput").addEventListener("input", function () {
   const searchValue = this.value.toLowerCase();
 
-  // Filter products based on search value
-  const filteredProducts = allCategories.filter(
-    (product) =>
-      product.name.toLowerCase().includes(searchValue) ||
-      (product.category && product.category.toLowerCase().includes(searchValue))
+  // Filter categories based on search value
+  const filteredCategories = allCategories.filter((category) =>
+    category.name.toLowerCase().includes(searchValue)
   );
 
   // Update products with filtered list
-  if (filteredProducts.length === 0) {
+  if (filteredCategories.length === 0) {
     categoryTable.innerHTML = `
-      <tr>
-        <td colspan="8" style="text-align: center; padding: 2rem;">
-          No products match your search
+     <tr>
+        <td colspan="8">
+          <div class="empty-state">
+            <i class="fas fa-tags"></i>
+            <h3>No category match your search</h3>
+            
+          </div>
         </td>
       </tr>
     `;
   } else {
-    categoryTable.innerHTML = filteredProducts
-      .map((product) => createProductRow(product))
+    categoryTable.innerHTML = filteredCategories
+      .map((product) => createCategoryRow(product))
       .join("");
   }
 });
