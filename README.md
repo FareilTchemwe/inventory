@@ -104,7 +104,7 @@ inventory/
 ├── server.js         # Main server file
 └── HTML files        # Frontend pages
     ├── index.html
-    ├── account.html
+    ├── settings.html
     ├── products.html
     ├── create-product.html
     ├── edit-product.html

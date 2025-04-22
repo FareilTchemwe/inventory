@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products - Inventory Management</title>
+    <title>Categories - Inventory Management</title>
     <link rel="stylesheet" href="css/global.css" />
     <link rel="stylesheet" href="css/alert.css" />
-    <link rel="stylesheet" href="css/products.css" />
+    <link rel="stylesheet" href="css/categories.css" />
     <link rel="stylesheet" href="css/dashboard.css" />
     <link rel="stylesheet" href="css/modal.css" />
     <link rel="stylesheet" href="css/loader.css" />
@@ -39,14 +39,14 @@
           <div class="menu-text">Dashboard</div>
         </a>
 
-        <a href="products.html" class="menu-item active">
+        <a href="products.html" class="menu-item">
           <div class="menu-icon">
             <i class="fas fa-box"></i>
           </div>
           <div class="menu-text">Products</div>
         </a>
 
-        <a href="categories.html" class="menu-item">
+        <a href="categories.html" class="menu-item active">
           <div class="menu-icon">
             <i class="fas fa-tags"></i>
           </div>
@@ -86,7 +86,7 @@
       <div class="products-container">
         <header class="dashboard-header">
           <div class="top-header">
-            <h1>Products</h1>
+            <h1>Categories</h1>
             <!-- Mobile Navigation Toggle -->
             <div class="mobile-nav-toggle" id="mobileNavToggle">
               <i class="fas fa-bars" style="margin: 12px"></i>
@@ -101,20 +101,20 @@
             >
               <i class="fas fa-sync-alt"></i> Refresh
             </button>
-            <a href="product-form.html" class="btn btn-primary">
-              <i class="fas fa-plus"></i> New Product
+            <a href="category-form.html" class="btn btn-primary">
+              <i class="fas fa-plus"></i> New Category
             </a>
           </div>
         </header>
         <div class="dashboard-card">
           <div class="products-header">
-            <h1>Products Inventory</h1>
+            <h1>Categories Inventory</h1>
             <div class="products-actions">
               <div class="search-container">
                 <input
                   type="text"
                   id="searchInput"
-                  placeholder="Search products..."
+                  placeholder="Search categories..."
                   class="form-control"
                 />
                 <i class="fas fa-search"></i>
@@ -127,10 +127,6 @@
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Category</th>
-                  <th>Current Stock</th>
-                  <th>Minimum Stock</th>
-                  <th>Price</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
@@ -179,17 +175,12 @@
               <p id="main-text"></p>
               <div class="input-group">
                 <input type="hidden" id="Id" class="form-control" />
-                <label for="saleDate">Date Sold</label>
-                <input
-                  type="date"
-                  id="saleDate"
-                  class="form-control"
-                  required
-                />
-                <label for="quantity">Quantity</label>
+                <label for="name">Category Name</label>
+                <input type="text" id="name" class="form-control" required />
+                <label for="status">Status</label>
                 <input
                   type="number"
-                  id="quantity"
+                  id="status"
                   min="1"
                   value="1"
                   class="form-control"
@@ -255,7 +246,7 @@
             <button class="btn btn-secondary" id="confirmation-cancel-btn">
               Cancel
             </button>
-            <button class="btn btn-danger" onclick="deleteProduct()">
+            <button class="btn btn-danger" onclick="deleteCategory()">
               Delete
             </button>
           </div>
@@ -267,6 +258,6 @@
     <script src="js/alert.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/modal.js"></script>
-    <script src="js/products.js"></script>
+    <script src="js/categories.js"></script>
   </body>
 </html>

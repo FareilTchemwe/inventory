@@ -1,3 +1,5 @@
+// Call this function when the document is loaded
+document.addEventListener("DOMContentLoaded", initLoader);
 // Function to toggle password visibility
 function togglePasswordVisibility() {
   const passwordField = document.getElementById("password");
@@ -21,6 +23,8 @@ loginForm.addEventListener("submit", async (event) => {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
 
+  // Show loader before API call
+  showLoader();
   try {
     const response = await fetch("http://localhost:3000/login", {
       method: "POST",
@@ -34,15 +38,17 @@ loginForm.addEventListener("submit", async (event) => {
     });
 
     response.json().then((resp) => {
-      console.log(resp);
       if (resp && "success" in resp) {
+        setAuthData(resp.token, resp.expiresIn);
         showAlert("success", "Logged in successfully! Redirecting...");
-        setTimeout(() => (window.location.href = "products.html"), 2000); // Redirect after 2 seconds
+        setTimeout(() => (window.location.href = "dashboard.html"), 500);
       } else {
+        hideLoader();
         showAlert("error", resp.error || "An unknown error occurred");
       }
     });
   } catch (error) {
+    hideLoader();
     console.error("Error during login:", error);
     showAlert("error", "An error occurred. Please try again.");
   }

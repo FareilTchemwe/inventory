@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/auth-form.css" />
+    <link rel="stylesheet" href="css/alert.css" />
+    <link rel="stylesheet" href="css/loader.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Login - Dress Store</title>
+  </head>
+
+  <body>
+    <div class="auth-container animate-fadeIn">
+      <div class="auth-card">
+        <div class="auth-header">
+          <h1>Welcome Back!</h1>
+          <p>Log in to access your account</p>
+        </div>
+
+        <!-- Alert Section (Hidden by default) -->
+        <div id="alert" class="alert alert-hidden">
+          <p id="alertMessage"></p>
+          <button id="closeAlert" class="close-alert" onclick="closeAlert()">
+            x
+          </button>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="password-container">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-control"
+                required
+              />
+              <i
+                class="fas fa-eye"
+                id="togglePassword"
+                onclick="togglePasswordVisibility()"
+              ></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">
+              Log In
+            </button>
+          </div>
+
+          <div class="auth-footer">
+            <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/loader.js"></script>
+    <script src="js/alert.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/auth.js"></script>
+  </body>
+</html>

@@ -3,59 +3,111 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="css/login.css" rel="stylesheet" />
-    <link href="css/alert.css" rel="stylesheet" />
+    <title>Welcome to Inventory Management</title>
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/welcome.css" />
     <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
-      href="node_modules/@fortawesome/fontawesome-free/css/all.min.css"
     />
-
-    <title>Login - Dress Store</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
   </head>
-
   <body>
-    <header>
-      <h1>Dress Store</h1>
-    </header>
+    <div class="welcome-container">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
 
-    <main>
-      <div class="login-container">
-        <h2>Welcome Back!</h2>
-        <p class="subtitle">Log in to access your account</p>
+      <div class="welcome-image-container">
+        <div class="welcome-image-overlay"></div>
+        <img
+          src="assets/images/stock-management.png"
+          alt="Inventory Management"
+          class="welcome-image"
+        />
+      </div>
 
-        <!-- Alert Section (Hidden by default) -->
-        <div id="alert" class="alert alert-hidden">
-          <p id="alertMessage"></p>
-          <button id="closeAlert" class="close-alert" onclick="closeAlert()">
-            x
-          </button>
+      <div class="welcome-content">
+        <span class="welcome-subtitle">Smart Business Solutions</span>
+        <h1 class="welcome-title">Streamline Your Inventory Management</h1>
+        <p class="welcome-description">
+          Take control of your inventory with our powerful and intuitive
+          platform. Track products in real-time, optimize stock levels, and make
+          data-driven decisions to improve your business operations.
+        </p>
+
+        <div class="welcome-features">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 22h14"></path>
+                <path d="M5 2h14"></path>
+                <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+                <line x1="9" y1="6" x2="15" y2="6"></line>
+                <line x1="9" y1="10" x2="15" y2="10"></line>
+                <line x1="9" y1="14" x2="11" y2="14"></line>
+              </svg>
+            </div>
+            <p class="feature-text">
+              Real-time inventory tracking and management
+            </p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"
+                ></path>
+                <line x1="4" y1="22" x2="4" y2="15"></line>
+              </svg>
+            </div>
+            <p class="feature-text">Comprehensive analytics and reports</p>
+          </div>
         </div>
 
-        <form id="loginForm">
-          <label>User Name</label>
-          <input type="text" name="username" id="username" required />
-
-          <label>Password</label>
-          <div class="password-container">
-            <input type="password" name="password" id="password" required />
-            <!-- Password Toggler Icon -->
-            <i
-              class="fas fa-eye"
-              id="togglePassword"
-              onclick="togglePasswordVisibility()"
-            ></i>
-          </div>
-
-          <button type="submit" class="login-button">Log In</button>
-        </form>
+        <div class="welcome-buttons">
+          <a href="signup.html" class="btn btn-primary">
+            Get Started
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
       </div>
-    </main>
+    </div>
 
-    <footer>
-      <p>&copy; 2024 Dress Store. All rights reserved.</p>
-    </footer>
-
-    <script src="js/alert.js"></script>
-    <script src="js/login.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/welcome.js"></script>
   </body>
 </html>

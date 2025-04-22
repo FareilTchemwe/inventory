@@ -1,0 +1,584 @@
+/* General styles */
+body {
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(135deg, #ece9e6, #ffffff);
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  animation: fadeIn 1s ease-in-out; /* Page fade-in */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Header */
+header {
+  background-color: #1b263b;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  animation: slideDown 1.5s ease-out; /* Slide down on load */
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.back-icon {
+  font-size: 20px;
+  color: #1b263b;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+/* Main container */
+main {
+  flex: 1; /* Take remaining space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Login container with slide-in animation */
+.login-container {
+  max-width: 360px;
+  width: 100%;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  text-align: center;
+  animation: slideUp 1.2s ease-in-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.login-container h2 {
+  margin-bottom: 10px;
+  color: #1b263b;
+  font-size: 1.5rem;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+/* Password container and toggle icon styling */
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+#togglePassword,
+#togglePasswordConfirm {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #1b263b;
+}
+
+#togglePassword:hover,
+#togglePasswordConfirm:hover {
+  color: #0d1b2a; /* Darker purple */
+}
+
+/* Apply styles to number inputs and other text inputs */
+input[type="number"],
+input[type="text"],
+input[type="password"],
+input[type="email"] select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  -webkit-appearance: none; /* For Webkit browsers */
+  -moz-appearance: none; /* For Firefox */
+  appearance: none; /* Standardize appearance */
+}
+
+/* Remove number input spinners for Webkit browsers */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox - Remove number input spinners */
+input[type="number"] {
+  appearance: textfield;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+select:focus {
+  border-color: #1b263b;
+  outline: none;
+  box-shadow: 0 0 5px var(--primary-dark);
+}
+
+/* Label Styling */
+label {
+  display: block;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 5px; /* Space between label and input */
+  text-align: left;
+}
+
+/* Footer */
+footer {
+  padding: 10px;
+  font-size: 0.85rem;
+  color: #777;
+  text-align: center;
+  background-color: #f4f4f4;
+  border-top: 1px solid #ddd;
+}
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--light);
+  padding: 2rem;
+}
+
+.auth-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-header h1 {
+  color: var(--primary);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-header p {
+  color: var(--secondary);
+  font-size: 1.1rem;
+}
+
+.auth-form {
+  margin-top: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(65, 90, 119, 0.1);
+}
+
+.btn-block {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--accent);
+}
+
+.auth-footer a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-footer a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.error-message {
+  color: var(--danger);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.form-group.has-error .form-control {
+  border-color: var(--danger);
+}
+
+.form-group.has-error .form-control:focus {
+  box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 1rem;
+  }
+
+  .auth-card {
+    padding: 1.5rem;
+  }
+
+  .auth-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .form-control {
+    padding: 0.7rem;
+  }
+}
+
+/* Dark Mode Variables */
+:root {
+  --dark-bg: #121212;
+  --dark-surface: #1e1e1e;
+  --dark-primary: #6d9dc5;
+  --dark-secondary: #90b3d4;
+  --dark-text: #e0e0e0;
+  --dark-text-secondary: #a0a0a0;
+  --dark-border: #333333;
+  --dark-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --dark-input-bg: #2a2a2a;
+  --dark-hover: #2c2c2c;
+}
+
+/* Dark Mode Media Query */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(135deg, #202124, #121212);
+    color: var(--dark-text);
+  }
+
+  /* Header Dark Mode */
+  header {
+    background-color: #0d1b2a;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .back-icon {
+    color: var(--dark-secondary);
+  }
+
+  /* Login container Dark Mode */
+  .login-container {
+    background-color: var(--dark-surface);
+    box-shadow: var(--dark-shadow);
+  }
+
+  .login-container h2 {
+    color: var(--dark-secondary);
+  }
+
+  .subtitle {
+    color: var(--dark-text-secondary);
+  }
+
+  /* Toggle icon styling */
+  #togglePassword,
+  #togglePasswordConfirm {
+    color: var(--dark-secondary);
+  }
+
+  #togglePassword:hover,
+  #togglePasswordConfirm:hover {
+    color: var(--dark-primary);
+  }
+
+  /* Input fields Dark Mode */
+  input[type="number"],
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  select {
+    background-color: var(--dark-input-bg);
+    border: 1px solid var(--dark-border);
+    color: var(--dark-text);
+  }
+
+  input[type="number"]:focus,
+  input[type="text"]:focus,
+  input[type="password"]:focus,
+  input[type="email"]:focus,
+  select:focus {
+    border-color: var(--dark-primary);
+    box-shadow: 0 0 5px rgba(109, 157, 197, 0.5);
+  }
+
+  /* Label Styling */
+  label {
+    color: var(--dark-text);
+  }
+
+  /* Footer Dark Mode */
+  footer {
+    background-color: var(--dark-surface);
+    border-top: 1px solid var(--dark-border);
+    color: var(--dark-text-secondary);
+  }
+
+  /* Auth components Dark Mode */
+  .auth-container {
+    background-color: var(--dark-bg);
+  }
+
+  .auth-card {
+    background: var(--dark-surface);
+    box-shadow: var(--dark-shadow);
+  }
+
+  .auth-header h1 {
+    color: var(--dark-primary);
+  }
+
+  .auth-header p {
+    color: var(--dark-secondary);
+  }
+
+  .form-group label {
+    color: var(--dark-secondary);
+  }
+
+  .form-control {
+    background-color: var(--dark-input-bg);
+    border: 2px solid var(--dark-border);
+    color: var(--dark-text);
+  }
+
+  .form-control:focus {
+    border-color: var(--dark-secondary);
+    box-shadow: 0 0 0 3px rgba(144, 179, 212, 0.2);
+  }
+
+  .auth-footer {
+    border-top: 1px solid var(--dark-border);
+  }
+
+  .auth-footer a {
+    color: var(--dark-secondary);
+  }
+
+  .auth-footer a:hover {
+    color: var(--dark-primary);
+  }
+
+  /* Error styling in dark mode */
+  .error-message {
+    color: #ff6b6b;
+  }
+
+  .form-group.has-error .form-control {
+    border-color: #ff6b6b;
+  }
+
+  .form-group.has-error .form-control:focus {
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+  }
+}
+
+/* Dark Mode Toggle Button (Optional) */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.2rem;
+  z-index: 100;
+  padding: 8px;
+  border-radius: 50%;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: rotate(30deg);
+}
+
+/* Manual Dark Mode Class */
+body.dark-mode {
+  background: linear-gradient(135deg, #202124, #121212);
+  color: var(--dark-text);
+}
+
+body.dark-mode header {
+  background-color: #0d1b2a;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .back-icon {
+  color: var(--dark-secondary);
+}
+
+body.dark-mode .login-container {
+  background-color: var(--dark-surface);
+  box-shadow: var(--dark-shadow);
+}
+
+body.dark-mode .login-container h2 {
+  color: var(--dark-secondary);
+}
+
+body.dark-mode .subtitle {
+  color: var(--dark-text-secondary);
+}
+
+body.dark-mode #togglePassword,
+body.dark-mode #togglePasswordConfirm {
+  color: var(--dark-secondary);
+}
+
+body.dark-mode #togglePassword:hover,
+body.dark-mode #togglePasswordConfirm:hover {
+  color: var(--dark-primary);
+}
+
+body.dark-mode input[type="number"],
+body.dark-mode input[type="text"],
+body.dark-mode input[type="password"],
+body.dark-mode input[type="email"],
+body.dark-mode select {
+  background-color: var(--dark-input-bg);
+  border: 1px solid var(--dark-border);
+  color: var(--dark-text);
+}
+
+body.dark-mode input[type="number"]:focus,
+body.dark-mode input[type="text"]:focus,
+body.dark-mode input[type="password"]:focus,
+body.dark-mode input[type="email"]:focus,
+body.dark-mode select:focus {
+  border-color: var(--dark-primary);
+  box-shadow: 0 0 5px rgba(109, 157, 197, 0.5);
+}
+
+body.dark-mode label {
+  color: var(--dark-text);
+}
+
+body.dark-mode footer {
+  background-color: var(--dark-surface);
+  border-top: 1px solid var(--dark-border);
+  color: var(--dark-text-secondary);
+}
+
+/* Dark mode transitions */
+body,
+input,
+select,
+.login-container,
+header,
+footer {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Add subtle UI hover effects for dark mode */
+@media (prefers-color-scheme: dark) {
+  .login-container:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  }
+
+  input:hover {
+    background-color: #323232;
+  }
+
+  button:hover {
+    background-color: #2a4460;
+  }
+}
+
+body.dark-mode .login-container:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode input:hover {
+  background-color: #323232;
+}
+
+body.dark-mode button:hover {
+  background-color: #2a4460;
+}
