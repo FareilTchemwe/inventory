@@ -1,7 +1,7 @@
 // auth.js - Client-side authentication utilities
 
 // Constants
-const API_URL = "http://localhost:3000"; // Adjust to your API URL
+const API_URL = "http://localhost:61001"; // Adjust to your API URL
 const TOKEN_KEY = "auth_token";
 const TOKEN_EXPIRY_KEY = "auth_token_expiry";
 

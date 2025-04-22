@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ============================
 // API Utility Functions
 // ============================
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "http://localhost:61001";
 
 async function apiGet(endpoint) {
   const response = await fetch(`${BASE_URL}${endpoint}`, {
