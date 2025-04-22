@@ -84,7 +84,7 @@ A modern, secure, and efficient inventory management system built with Node.js, 
    node server.js
    ```
 
-The application will be available at `http://localhost:61001`
+The application will be available at `https://inventory-server-five.vercel.app`
 
 The default username is `john`
 

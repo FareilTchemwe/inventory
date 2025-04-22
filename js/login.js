@@ -26,16 +26,19 @@ loginForm.addEventListener("submit", async (event) => {
   // Show loader before API call
   showLoader();
   try {
-    const response = await fetch("http://localhost:61001/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    });
+    const response = await fetch(
+      "https://inventory-server-five.vercel.app/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      }
+    );
 
     response.json().then((resp) => {
       if (resp && "success" in resp) {
