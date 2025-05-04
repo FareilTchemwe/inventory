@@ -244,7 +244,8 @@ async function getCategories() {
       if (data.categories == "") {
         showAlert(
           "warning",
-          "No categories found. Create a Category before creating a product"
+          "No categories found. Create a Category before creating a product",
+          10000
         );
       }
 
