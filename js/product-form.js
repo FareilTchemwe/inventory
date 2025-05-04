@@ -241,6 +241,13 @@ async function getCategories() {
   try {
     const data = await apiGet("/get-categories");
     if (data?.success && Array.isArray(data.categories)) {
+      if (data.categories == "") {
+        showAlert(
+          "warning",
+          "No categories found. Create a Category before creating a product"
+        );
+      }
+
       categories = data.categories;
       populateCategoryDropdown(categories);
     } else {

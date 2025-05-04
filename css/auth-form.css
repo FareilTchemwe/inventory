@@ -1,13 +1,12 @@
 /* General styles */
 body {
   font-family: "Arial", sans-serif;
-  background: linear-gradient(135deg, #ece9e6, #ffffff);
+  background: var(--light);
   color: #333;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   animation: fadeIn 1s ease-in-out; /* Page fade-in */
 }
 
@@ -21,16 +20,6 @@ body {
   }
 }
 
-/* Header */
-header {
-  background-color: #1b263b;
-  color: white;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  animation: slideDown 1.5s ease-out; /* Slide down on load */
-}
-
 @keyframes slideDown {
   from {
     transform: translateY(-50px);
@@ -42,39 +31,6 @@ header {
   }
 }
 
-.back-icon {
-  font-size: 20px;
-  color: #1b263b;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-}
-
-/* Main container */
-main {
-  flex: 1; /* Take remaining space */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-/* Login container with slide-in animation */
-.login-container {
-  max-width: 360px;
-  width: 100%;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  background-color: #ffffff;
-  text-align: center;
-  animation: slideUp 1.2s ease-in-out;
-}
-
 @keyframes slideUp {
   from {
     transform: translateY(50px);
@@ -84,18 +40,6 @@ main {
     transform: translateY(0);
     opacity: 1;
   }
-}
-
-.login-container h2 {
-  margin-bottom: 10px;
-  color: #1b263b;
-  font-size: 1.5rem;
-}
-
-.subtitle {
-  color: #666;
-  font-size: 0.9rem;
-  margin-bottom: 20px;
 }
 
 /* Password container and toggle icon styling */
@@ -180,7 +124,6 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--light);
   padding: 2rem;
 }
 
@@ -328,30 +271,6 @@ footer {
   body {
     background: linear-gradient(135deg, #202124, #121212);
     color: var(--dark-text);
-  }
-
-  /* Header Dark Mode */
-  header {
-    background-color: #0d1b2a;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  }
-
-  .back-icon {
-    color: var(--dark-secondary);
-  }
-
-  /* Login container Dark Mode */
-  .login-container {
-    background-color: var(--dark-surface);
-    box-shadow: var(--dark-shadow);
-  }
-
-  .login-container h2 {
-    color: var(--dark-secondary);
-  }
-
-  .subtitle {
-    color: var(--dark-text-secondary);
   }
 
   /* Toggle icon styling */
